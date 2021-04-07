@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.11) # FetchContent is available in 3.11+
-project(raylib_c C)
+project(ray_pong_c C)
 
 set(CMAKE_C_STANDARD 99)
+
+# RAYLIB ---------------
 
 # Set this to the minimal version you want to support
 find_package(raylib 3.5 QUIET) # Let CMake search for a raylib-config.cmake
@@ -31,9 +33,16 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
 
 endif()
 
-# This is the main part:
+# RAYLIB ---------------
 
-add_executable(${PROJECT_NAME} src/main.c src/entities/paddle.c)
+set(INSTALL_BIN_DIR ${PROJECT_SOURCE_DIR}/bin)
+
+set (SOURCES
+        src/main.c
+        src/entities/paddle.c
+        )
+
+add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} raylib)
 
-# That's it! You should have an example executable that you can run. Have fun!
+install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BIN_DIR})

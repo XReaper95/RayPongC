@@ -27,7 +27,6 @@ Paddle* createPaddle(const char *name, Color color, bool leftPaddle){
 
   paddle->size.x = PADDLE_FIXED_WIDTH;
   paddle->size.y = PADDLE_FIXED_HEIGHT;
-  CheckCollisionCircleRec()
   return paddle;
 }
 void DrawPaddle(const Paddle* paddle) {
