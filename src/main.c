@@ -1,23 +1,22 @@
 #include "raylib.h"
-#include "entities/paddle.h"
-#include <stdio.h>
+#include "system/game.h"
 
 int main(void)
 {
+  SetTraceLogLevel(LOG_INFO);
+
   // WINDOW
-  const int screenWidth = 800;
-  const int screenHeight = 600;
-  const int targetFPS = 144;
+  static const int screenWidth = 800;
+  static const int screenHeight = 600;
+  static const int targetFPS = 60;
 
   char winTitle[] = "Pong with Raylib";
   InitWindow(screenWidth, screenHeight, winTitle);
-
   SetTargetFPS(targetFPS);               // Set desired framerate (frames-per-second)
 
   // INITIALIZE
 
-  Paddle *player1 = createPaddle("XReaper", BLUE, true);
-  Paddle *player2 = createPaddle("Opponent", RED, false);
+  Game *game = createGame();
 
   // Main game loop
   while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -26,22 +25,25 @@ int main(void)
 
     SetWindowTitle(TextFormat("%s FPS - %d", winTitle, GetFPS()));
 
+    // INPUT
+    processGameInput(game);
+
+    // COLLISION
+
+    resolveCollisions(game);
+
     // DRAW
-
     BeginDrawing();
-
     ClearBackground(BLACK);
 
-    DrawPaddle(player1);
-    DrawPaddle(player2);
+    drawGame(game);
 
     EndDrawing();
   }
 
   // DESTROY
+  cleanUpGame(game);
 
-  destroyPaddle(player1);
-  destroyPaddle(player2);
   CloseWindow();        // Close window and OpenGL context
 
 

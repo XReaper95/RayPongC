@@ -40,6 +40,8 @@ set(INSTALL_BIN_DIR ${PROJECT_SOURCE_DIR}/bin)
 set (SOURCES
         src/main.c
         src/entities/paddle.c
+        src/entities/ball.c
+        src/system/game.c
         )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

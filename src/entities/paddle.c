@@ -7,37 +7,41 @@
 #include "raylib.h"
 #include "paddle.h"
 
-#define PADDLE_FIXED_HEIGHT 100.0f
-#define PADDLE_FIXED_WIDTH 30.0f
+static const float paddleFixedHeight = 100.0f;
+static const float paddleFixedWidth = 30.0f;
 
-#define PADDLE_WIDTH_MARGIN 15.0f
+static const float paddleWidthMargin = 15.0f;
+
+static const float paddleMovementFactor = 0.377f;
 
 
-Paddle* createPaddle(const char *name, Color color, bool leftPaddle){
-  Paddle *paddle = malloc(sizeof(Paddle));
-  paddle->name = name;
-  paddle->color = color;
+Paddle* createPaddle(const char *name, Color color, bool leftPaddle, const ControlScheme *scheme){
+  Paddle *p = malloc(sizeof(Paddle));
+  p->name = name;
+  p->color = color;
+  p->controlScheme = scheme;
 
   if (leftPaddle){
-    paddle->pos.x = PADDLE_WIDTH_MARGIN;
+    p->pos.x = paddleWidthMargin;
   } else {
-    paddle->pos.x = (float)GetScreenWidth() - PADDLE_WIDTH_MARGIN - PADDLE_FIXED_WIDTH;
+    p->pos.x = (float)GetScreenWidth() - paddleWidthMargin - paddleFixedWidth;
   }
-  paddle->pos.y = ((float)GetScreenHeight() / 2) - (PADDLE_FIXED_HEIGHT / 2);
+  p->pos.y = ((float)GetScreenHeight() / 2) - (paddleFixedHeight / 2);
 
-  paddle->size.x = PADDLE_FIXED_WIDTH;
-  paddle->size.y = PADDLE_FIXED_HEIGHT;
-  return paddle;
-}
-void DrawPaddle(const Paddle* paddle) {
-  DrawRectangleV(
-      paddle->pos,
-      paddle->size,
-      paddle->color
-      );
-}
-void destroyPaddle(Paddle * paddle) {
-  free(paddle);
+  p->size.x = paddleFixedWidth;
+  p->size.y = paddleFixedHeight;
+  return p;
 }
 
+void drawPaddle(const Paddle* p) {
+  DrawRectangleV(p->pos, p->size, p->color);
+}
 
+void processInput(Paddle* p){
+  if (IsKeyDown(p->controlScheme->UP_KEY) && p->pos.y > 0.0f) { // UP
+    p->pos.y -= paddleMovementFactor * (float)GetFrameTime()*1000;
+  }
+  if (IsKeyDown(p->controlScheme->DOWN_KEY) && p->pos.y + p->size.y< (float)GetScreenHeight()) { // Down
+    p->pos.y += paddleMovementFactor * (float)GetFrameTime()*1000;
+  }
+}
