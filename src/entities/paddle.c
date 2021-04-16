@@ -12,7 +12,7 @@ static const float paddleFixedWidth = 30.0f;
 
 static const float paddleWidthMargin = 15.0f;
 
-static const float paddleMovementFactor = 0.377f;
+static const float paddleMovementFactor = 300.0f;
 
 
 Paddle* createPaddle(const char *name, Color color, bool leftPaddle, const ControlScheme *scheme){
@@ -39,9 +39,9 @@ void drawPaddle(const Paddle* p) {
 
 void processInput(Paddle* p){
   if (IsKeyDown(p->controlScheme->UP_KEY) && p->pos.y > 0.0f) { // UP
-    p->pos.y -= paddleMovementFactor * (float)GetFrameTime()*1000;
+    p->pos.y -= paddleMovementFactor * (float)GetFrameTime();
   }
   if (IsKeyDown(p->controlScheme->DOWN_KEY) && p->pos.y + p->size.y< (float)GetScreenHeight()) { // Down
-    p->pos.y += paddleMovementFactor * (float)GetFrameTime()*1000;
+    p->pos.y += paddleMovementFactor * (float)GetFrameTime();
   }
 }

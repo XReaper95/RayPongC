@@ -17,9 +17,9 @@ typedef struct {
 
 Game* createGame(void);
 
-void processGameInput(Game* g);
+void processGameEvents(Game* g);
 
-void resolveCollisions(Game* g);
+void updateScore(Game* g);
 
 void drawGame(const Game* g);
 

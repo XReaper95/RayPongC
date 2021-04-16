@@ -6,29 +6,6 @@
 #include "raylib.h"
 #include "game.h"
 
-bool checkCollisionWithBorder(Ball *b){
-  float x = b->pos.x;
-  float y = b->pos.y;
-  float r = b->radius;
-
-  float w = (float)GetScreenWidth();
-  float h = (float)GetScreenHeight();
-
-  if (x + r == w || x - r == w){
-    TraceLog(LOG_ERROR, "Collision with border!");
-    return true;
-  }
-  if (x + r == h || x - r == h){
-    TraceLog(LOG_ERROR, "Collision with border!");
-    return true;
-  }
-
-  if (x + r + 7 < 0 || x + r + 7 > w){
-    b->frozen = true;
-  }
-
-  return false;
-}
 
 Game* createGame(void){
   Game *g = malloc(sizeof(Game));
@@ -40,10 +17,20 @@ Game* createGame(void){
   return g;
 }
 
-void processGameInput(Game* g){
+void processGameEvents(Game* g){
   processInput(g->leftPaddle);
   processInput(g->rightPaddle);
+
+  ballBorderCollision(g->ball);
+
+  if (!g->ball->disablePaddleCollision){
+
+    ballPaddleCollision(g->ball, g->leftPaddle);
+    ballPaddleCollision(g->ball, g->rightPaddle);
+  }
+
   processBallMovement(g->ball);
+  updateScore(g);
 }
 
 void drawGame(const Game* g){
@@ -52,14 +39,32 @@ void drawGame(const Game* g){
   drawBall(g->ball);
 }
 
-void resolveCollisions(Game* g){
-  checkCollisionWithBorder(g->ball);
-
-}
-
 void cleanUpGame(Game* g){
   free(g->leftPaddle);
   free(g->rightPaddle);
   free(g->ball);
   free(g);
+}
+
+void updateScore(Game* g){
+  float ballX = g->ball->pos.x;
+  float ballRadius = g->ball->radius;
+  float screenW = (float)GetScreenWidth();
+  bool scored = false;
+
+  // right score
+  if (ballX  > screenW + ballRadius + 30){
+    scored = true;
+  }
+
+  // left score
+  if (ballX  < 0 - ballRadius - 30){
+    scored = true;
+  }
+
+  // reset ball position
+  if (scored){
+    free(g->ball);
+    g->ball = createBall(WHITE);
+  }
 }

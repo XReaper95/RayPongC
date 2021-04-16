@@ -8,7 +8,7 @@ int main(void)
   // WINDOW
   static const int screenWidth = 800;
   static const int screenHeight = 600;
-  static const int targetFPS = 60;
+  static const int targetFPS = 0;
 
   char winTitle[] = "Pong with Raylib";
   InitWindow(screenWidth, screenHeight, winTitle);
@@ -25,12 +25,8 @@ int main(void)
 
     SetWindowTitle(TextFormat("%s FPS - %d", winTitle, GetFPS()));
 
-    // INPUT
-    processGameInput(game);
-
-    // COLLISION
-
-    resolveCollisions(game);
+    // EVENTS
+    processGameEvents(game);
 
     // DRAW
     BeginDrawing();

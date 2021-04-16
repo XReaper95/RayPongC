@@ -6,13 +6,21 @@
 #include <math.h>
 #include "ball.h"
 #include "raylib.h"
+#include "../system/game.h"
+
+extern Game *game;
 
 static const float fixedBallRadius = 5.0f;
 static const int maxInitialArcAngleDeg = 45;
 
-static const double fixedBallSpeedFactor = 0.4;
+static const double fixedBallSpeedFactor = 300.0;
 
-static double getBallInitialAngle(){
+static double getAngleInRadians_(int angle){
+  double resultInRadians = (double)angle * PI / 180;
+  return resultInRadians;
+}
+
+static double getBallInitialRandomAngle_(){
   int result;
   int selectRightOrLeft = GetRandomValue(0, 1);
 
@@ -22,9 +30,7 @@ static double getBallInitialAngle(){
     result = GetRandomValue(360 - maxInitialArcAngleDeg, 360 + maxInitialArcAngleDeg);
   }
 
-  float resultInRadians = (float)(result) * PI / 180;
-
-  return (double)resultInRadians;
+  return getAngleInRadians_(result);
 }
 
 Ball* createBall(Color color){
@@ -32,10 +38,17 @@ Ball* createBall(Color color){
   b->pos.x = (float)GetScreenWidth() / 2;
   b->pos.y = (float)GetScreenHeight() / 2;
   b->radius = fixedBallRadius;
-  b->color = color;
-  b->frozen = true;
-  b->initialAngle = getBallInitialAngle();
 
+  double initialAngle = getBallInitialRandomAngle_();
+  b->velX = fixedBallSpeedFactor * cos(initialAngle);
+  b->velY = fixedBallSpeedFactor * sin(initialAngle);
+
+  b->frozen = true;
+  b->screenEdgeCollision = false;
+  b->paddleSideCollision = false;
+  b->paddleTBCollision = false;
+  b->disablePaddleCollision = false;
+  b->color = color;
   return b;
 }
 
@@ -49,7 +62,73 @@ void processBallMovement(Ball* b){
   }
 
   if (!b->frozen){
-    b->pos.x += (float)((fixedBallSpeedFactor * GetFrameTime() * 1000.0) * cos(b->initialAngle));
-    b->pos.y += (float)((fixedBallSpeedFactor * GetFrameTime() * 1000.0) * sin(b->initialAngle));
+    double velocityX = b->velX * GetFrameTime();
+    double velocityY = b->velY * GetFrameTime();
+
+    if (b->screenEdgeCollision) {
+      b->velY *= -1.0f;
+      b->screenEdgeCollision = false;
+    }
+    if (b->paddleSideCollision) {
+      b->velX *= -1.0f;
+      b->paddleSideCollision = false;
+
+    }
+    if (b->paddleTBCollision) {
+      b->velY *= -1.0f;
+      b->paddleTBCollision = false;
+      b->disablePaddleCollision = true;
+    }
+
+    b->pos.x += (float)velocityX;
+    b->pos.y += (float)velocityY;
   }
 };
+
+void ballBorderCollision(Ball* b){
+  double velocityY = b->velY * GetFrameTime();
+  double velocityX = b->velX * GetFrameTime();
+
+  // collide with bottom border
+  if (b->pos.y + b->radius + velocityY >= (float)GetScreenHeight()){
+    b->screenEdgeCollision = true;
+  }
+
+  // collide with top border
+  if (b->pos.y - b->radius + velocityY < 0){
+    b->screenEdgeCollision = true;
+  }
+
+}
+
+void ballPaddleCollision(Ball* b, Paddle *p){
+  float velocityX = (float)b->velX * GetFrameTime();
+  float velocityY = (float)b->velY * GetFrameTime();
+
+  float ballX = b->pos.x + velocityX;
+  float ballY = b->pos.y + velocityY;
+  float paddleLeftSide = p->pos.x;
+  float paddleRightSide = p->pos.x +  p->size.x;
+  float paddleTopSide = p->pos.y;
+  float paddleBottomSide = p->pos.y + p->size.y;
+
+  float testX = ballX;
+  float testY = ballY;
+
+  if (ballX < paddleLeftSide)        testX = paddleLeftSide;
+  else if (ballX > paddleRightSide)  testX = paddleRightSide;
+  if (ballY < paddleTopSide)         testY = paddleTopSide;
+  else if (ballY > paddleBottomSide) testY = paddleBottomSide;
+
+  float distX = ballX-testX;
+  float distY = ballY-testY;
+  float distance = sqrtf( (distX*distX) + (distY*distY));
+
+  if (distance <= b->radius) {
+    if (distY == 0.0f){
+      b->paddleSideCollision = true;
+    } else {
+      b->paddleTBCollision = true;
+    }
+  }
+}
