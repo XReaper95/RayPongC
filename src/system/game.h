@@ -12,8 +12,8 @@ typedef struct {
   Paddle *leftPaddle;
   Paddle *rightPaddle;
   Ball *ball;
+  bool isWon;
 } Game;
-
 
 Game* createGame(void);
 
@@ -22,6 +22,8 @@ void processGameEvents(Game* g);
 void updateScore(Game* g);
 
 void drawGame(const Game* g);
+
+void finishGame(Game* g, const Paddle* p);
 
 void cleanUpGame(Game* g);
 

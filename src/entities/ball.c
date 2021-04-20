@@ -87,7 +87,6 @@ void processBallMovement(Ball* b){
 
 void ballBorderCollision(Ball* b){
   double velocityY = b->velY * GetFrameTime();
-  double velocityX = b->velX * GetFrameTime();
 
   // collide with bottom border
   if (b->pos.y + b->radius + velocityY >= (float)GetScreenHeight()){

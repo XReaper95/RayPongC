@@ -20,6 +20,7 @@ Paddle* createPaddle(const char *name, Color color, bool leftPaddle, const Contr
   p->name = name;
   p->color = color;
   p->controlScheme = scheme;
+  p->score = 0;
 
   if (leftPaddle){
     p->pos.x = paddleWidthMargin;

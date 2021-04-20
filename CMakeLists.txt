@@ -42,7 +42,7 @@ set (SOURCES
         src/entities/paddle.c
         src/entities/ball.c
         src/system/game.c
-        )
+        src/system/ui.c src/system/ui.h)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} raylib)

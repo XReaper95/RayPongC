@@ -15,6 +15,7 @@ typedef struct {
   Vector2 pos;
   Vector2 size;
   Color color;
+  int score;
   const ControlScheme *controlScheme;
 } Paddle;
 

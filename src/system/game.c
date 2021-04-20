@@ -11,8 +11,9 @@ Game* createGame(void){
   Game *g = malloc(sizeof(Game));
 
   g->leftPaddle = createPaddle("XReaper", BLUE, true, &SCHEME1);
-  g->rightPaddle = createPaddle("Opponent", RED, false, &SCHEME2);
+  g->rightPaddle = createPaddle("AI", RED, false, &SCHEME2);
   g->ball = createBall(WHITE);
+  g->isWon = false;
 
   return g;
 }
@@ -55,11 +56,21 @@ void updateScore(Game* g){
   // right score
   if (ballX  > screenW + ballRadius + 30){
     scored = true;
+    g->rightPaddle->score += 1;
+
+    if (g->rightPaddle->score >= 5){
+      finishGame(g, g->rightPaddle);
+    }
   }
 
   // left score
   if (ballX  < 0 - ballRadius - 30){
     scored = true;
+    g->leftPaddle->score += 1;
+
+    if (g->leftPaddle->score >= 5){
+      finishGame(g, g->leftPaddle);
+    }
   }
 
   // reset ball position
@@ -67,4 +78,10 @@ void updateScore(Game* g){
     free(g->ball);
     g->ball = createBall(WHITE);
   }
+
+}
+
+void finishGame(Game* g, const Paddle* p){
+  TraceLog(LOG_INFO, "Player %s won!", p->name);
+  g->isWon = true;
 }
