@@ -23,7 +23,7 @@ void updateScore(Game* g);
 
 void drawGame(const Game* g);
 
-void finishGame(Game* g, const Paddle* p);
+void checkFinishGame(Game* g, const Paddle* p);
 
 void cleanUpGame(Game* g);
 

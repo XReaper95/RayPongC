@@ -6,6 +6,7 @@
 #include "raylib.h"
 #include "game.h"
 
+#define GAME_MAX_POINTS 5
 
 Game* createGame(void){
   Game *g = malloc(sizeof(Game));
@@ -58,9 +59,8 @@ void updateScore(Game* g){
     scored = true;
     g->rightPaddle->score += 1;
 
-    if (g->rightPaddle->score >= 5){
-      finishGame(g, g->rightPaddle);
-    }
+    checkFinishGame(g, g->rightPaddle);
+
   }
 
   // left score
@@ -68,9 +68,7 @@ void updateScore(Game* g){
     scored = true;
     g->leftPaddle->score += 1;
 
-    if (g->leftPaddle->score >= 5){
-      finishGame(g, g->leftPaddle);
-    }
+    checkFinishGame(g, g->leftPaddle);
   }
 
   // reset ball position
@@ -81,7 +79,9 @@ void updateScore(Game* g){
 
 }
 
-void finishGame(Game* g, const Paddle* p){
-  TraceLog(LOG_INFO, "Player %s won!", p->name);
-  g->isWon = true;
+void checkFinishGame(Game* g, const Paddle* p){
+  if (p->score > GAME_MAX_POINTS){
+    TraceLog(LOG_INFO, "Player %s won!", p->name);
+    g->isWon = true;
+  }
 }
