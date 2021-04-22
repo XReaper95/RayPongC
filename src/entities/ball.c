@@ -10,7 +10,7 @@
 
 extern Game *game;
 
-static const float fixedBallRadius = 5.0f;
+static const float fixedBallRadius = 15.0f;
 static const int maxInitialArcAngleDeg = 45;
 
 static const double fixedBallSpeedFactor = 300.0;
@@ -33,7 +33,7 @@ static double getBallInitialRandomAngle_(){
   return getAngleInRadians_(result);
 }
 
-Ball* createBall(Color color){
+Ball* createBall(){
   Ball *b = malloc(sizeof(Ball));
   b->pos.x = (float)GetScreenWidth() / 2;
   b->pos.y = (float)GetScreenHeight() / 2;
@@ -48,7 +48,7 @@ Ball* createBall(Color color){
   b->paddleSideCollision = false;
   b->paddleTBCollision = false;
   b->disablePaddleCollision = false;
-  b->color = color;
+  b->color = YELLOW;
   return b;
 }
 

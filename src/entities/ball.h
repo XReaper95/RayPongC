@@ -22,7 +22,7 @@ typedef struct {
   bool disablePaddleCollision;
 } Ball;
 
-Ball* createBall(Color color);
+Ball* createBall();
 
 void drawBall(const Ball* b);
 

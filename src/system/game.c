@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "raylib.h"
 #include "game.h"
+#include "ui.h"
 
 #define GAME_MAX_POINTS 5
 
@@ -13,7 +14,7 @@ Game* createGame(void){
 
   g->leftPaddle = createPaddle("XReaper", BLUE, true, &SCHEME1);
   g->rightPaddle = createPaddle("AI", RED, false, &SCHEME2);
-  g->ball = createBall(WHITE);
+  g->ball = createBall();
   g->isWon = false;
 
   return g;
@@ -36,6 +37,9 @@ void processGameEvents(Game* g){
 }
 
 void drawGame(const Game* g){
+  // interface
+  drawGameField();
+
   drawPaddle(g->leftPaddle);
   drawPaddle(g->rightPaddle);
   drawBall(g->ball);
@@ -55,7 +59,7 @@ void updateScore(Game* g){
   bool scored = false;
 
   // right score
-  if (ballX  > screenW + ballRadius + 30){
+  if (ballX  < 0 - ballRadius - 30){
     scored = true;
     g->rightPaddle->score += 1;
 
@@ -64,7 +68,7 @@ void updateScore(Game* g){
   }
 
   // left score
-  if (ballX  < 0 - ballRadius - 30){
+  if ( ballX  > screenW + ballRadius + 30){
     scored = true;
     g->leftPaddle->score += 1;
 
@@ -74,13 +78,13 @@ void updateScore(Game* g){
   // reset ball position
   if (scored){
     free(g->ball);
-    g->ball = createBall(WHITE);
+    g->ball = createBall();
   }
 
 }
 
 void checkFinishGame(Game* g, const Paddle* p){
-  if (p->score > GAME_MAX_POINTS){
+  if (p->score >= GAME_MAX_POINTS){
     TraceLog(LOG_INFO, "Player %s won!", p->name);
     g->isWon = true;
   }
