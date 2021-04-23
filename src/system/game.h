@@ -22,6 +22,8 @@ Game* createGame(void);
 
 void processGameEvents(Game* g);
 
+void processWonState(Game* g);
+
 void updateScore(Game* g);
 
 void drawGame(const Game* g);

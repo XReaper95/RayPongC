@@ -100,7 +100,7 @@ void drawWinMessage(Paddle p, Color msgColor) {
       110,
       GetScreenHeight() / 3,
       50,
-      msgColor
+      Fade(msgColor, 0.55f)
   );
 }
 
@@ -110,6 +110,6 @@ void drawResetMessage() {
       40,
       400,
       30,
-      WHITE
+      Fade(WHITE, 0.55f)
   );
 }

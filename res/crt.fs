@@ -45,10 +45,6 @@ void main()
   uvr.y *= rand(vec2(uvr.y, time));
   finalColor.rgb += finalColor.rgb * (rand(uvr) * 0.5);
 
-  // rolling scanlines
-  float y = ((fragTexCoord.y + time * 20.0) / renderHeight);
-  finalColor.rgb *= 1.0 - 0.25 * (sin(y * 64.0) * 0.5 + 0.5);
-
   // edge colors (black)
   if (uvc.x < 0 || uvc.x > 1.0 || uvc.y < 0 || uvc.y > 1.0)
     finalColor = vec4(0.0, 0.0, 0.0, 1.0);

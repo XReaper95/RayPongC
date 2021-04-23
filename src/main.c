@@ -27,7 +27,7 @@ int main(void)
   Shader shader = LoadShader(0, "../res/crt.fs");
 
   Game *game = createGame();
-  Color backgroundColor = ColorFromHSV(4, 0.16f, 0.18f);
+  Color backgroundColor = ColorFromHSV(207, 0.47f, 0.15f);
 
   // Main game loop
   while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -60,6 +60,10 @@ int main(void)
       EndShaderMode();
 
       drawScoreBoard(game);
+
+    if (game->isWon){
+      processWonState(game);
+    }
 
     EndDrawing();
   }

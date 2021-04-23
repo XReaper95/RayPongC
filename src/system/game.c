@@ -7,7 +7,7 @@
 #include "game.h"
 #include "ui.h"
 
-#define GAME_MAX_POINTS 5
+#define GAME_MAX_POINTS 1
 
 Game* createGame(void){
   Game *g = malloc(sizeof(Game));
@@ -91,28 +91,28 @@ void checkFinishGame(Game* g, Paddle *p){
 }
 
 Game* processGameReset(Game *g) {
-  if (g->isWon){
-    Color msgColor;
-    Paddle p;
-
-    if (g->leftPaddle->won){
-      msgColor = g->leftPaddle->color;
-      p = *g->leftPaddle;
-    } else {
-      msgColor = g->rightPaddle->color;
-      p = *g->rightPaddle;
-    }
-
-    drawWinMessage(p, msgColor);
-
-    drawResetMessage();
-  }
-
-  if (IsKeyPressed(KEY_SPACE) && g->isWon){
-    stopGameWonSound();
-    free(g);
-    return createGame();
+  if (g->isWon && IsKeyPressed(KEY_SPACE)){
+      stopGameWonSound();
+      free(g);
+      return createGame();
   } else {
     return g;
   }
+}
+
+void processWonState(Game *g) {
+  Color msgColor;
+  Paddle p;
+
+  if (g->leftPaddle->won){
+    msgColor = g->leftPaddle->color;
+    p = *g->leftPaddle;
+  } else {
+    msgColor = g->rightPaddle->color;
+    p = *g->rightPaddle;
+  }
+
+  drawWinMessage(p, msgColor);
+
+  drawResetMessage();
 }
