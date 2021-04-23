@@ -45,6 +45,9 @@ void unloadSounds() {
   UnloadSound(soundsManager->startWhistle);
   free(soundsManager);
 }
+void stopGameWonSound() {
+  StopSound(soundsManager->gameWon);
+}
 
 Sound loadSoundResource_(const char * path) {
   Sound snd = LoadSound(TextFormat("../res/%s", path));

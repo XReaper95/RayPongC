@@ -31,4 +31,6 @@ void playScoreSound();
 
 void playGameWonSound();
 
+void stopGameWonSound();
+
 #endif //RAY_PONG_C_SRC_SYSTEM_SOUNDS_H_
