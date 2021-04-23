@@ -7,12 +7,15 @@
 
 #include "../entities/paddle.h"
 #include "../entities/ball.h"
+#include "sounds.h"
 
 typedef struct {
   Paddle *leftPaddle;
   Paddle *rightPaddle;
   Ball *ball;
   bool isWon;
+
+  Sounds* sounds;
 } Game;
 
 Game* createGame(void);

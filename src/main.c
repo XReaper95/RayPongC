@@ -8,13 +8,16 @@ int main(void)
   // WINDOW
   static const int screenWidth = 800;
   static const int screenHeight = 600;
-  static const int targetFPS = 0;
+  static const int targetFPS = 60;
 
   char winTitle[] = "Pong with Raylib";
   InitWindow(screenWidth, screenHeight, winTitle);
   SetTargetFPS(targetFPS);               // Set desired framerate (frames-per-second)
 
   // INITIALIZE
+  InitAudioDevice();
+
+  loadSounds();
 
   Game *game = createGame();
 
@@ -41,9 +44,11 @@ int main(void)
     EndDrawing();
   }
 
-  // DESTROY
+  // DE-INITIALIZE
   cleanUpGame(game);
 
+  unloadSounds(game->sounds);
+  CloseAudioDevice();
   CloseWindow();        // Close window and OpenGL context
 
 

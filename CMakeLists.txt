@@ -35,16 +35,14 @@ endif()
 
 # RAYLIB ---------------
 
-set(INSTALL_BIN_DIR ${PROJECT_SOURCE_DIR}/bin)
-
 set (SOURCES
         src/main.c
         src/entities/paddle.c
         src/entities/ball.c
         src/system/game.c
-        src/system/ui.c src/system/ui.h)
+        src/system/ui.c
+        src/system/sounds.c
+        )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} raylib)
-
-install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_BIN_DIR})

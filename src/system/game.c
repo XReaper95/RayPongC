@@ -78,6 +78,7 @@ void updateScore(Game* g){
 
   // reset ball position
   if (scored){
+    playScoreSound();
     free(g->ball);
     g->ball = createBall();
   }
@@ -85,6 +86,7 @@ void updateScore(Game* g){
 
 void checkFinishGame(Game* g, Paddle *p){
   if (p->score >= GAME_MAX_POINTS){
+    playGameWonSound();
     p->won = true;
     g->isWon = true;
   }

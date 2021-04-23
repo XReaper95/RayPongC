@@ -6,9 +6,7 @@
 #include <math.h>
 #include "ball.h"
 #include "raylib.h"
-#include "../system/game.h"
-
-extern Game *game;
+#include "../system/sounds.h"
 
 static const float fixedBallRadius = 15.0f;
 static const int maxInitialArcAngleDeg = 45;
@@ -58,6 +56,7 @@ void drawBall(const Ball* b){
 
 void processBallMovement(Ball* b){
   if (IsKeyPressed(KEY_SPACE) && b->frozen){
+    playWhistleSound();
     b->frozen = false;
   }
 
@@ -66,15 +65,18 @@ void processBallMovement(Ball* b){
     double velocityY = b->velY * GetFrameTime();
 
     if (b->screenEdgeCollision) {
+      playBorderHitSound();
       b->velY *= -1.0f;
       b->screenEdgeCollision = false;
     }
     if (b->paddleSideCollision) {
+      playPaddleHitSound();
       b->velX *= -1.0f;
       b->paddleSideCollision = false;
 
     }
     if (b->paddleTBCollision) {
+      playPaddleHitSound();
       b->velY *= -1.0f;
       b->paddleTBCollision = false;
       b->disablePaddleCollision = true;
@@ -83,7 +85,7 @@ void processBallMovement(Ball* b){
     b->pos.x += (float)velocityX;
     b->pos.y += (float)velocityY;
   }
-};
+}
 
 void ballBorderCollision(Ball* b){
   double velocityY = b->velY * GetFrameTime();
