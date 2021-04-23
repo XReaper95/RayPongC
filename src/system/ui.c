@@ -24,6 +24,9 @@ void drawGameField(){
 
   int linesThickness = 10;
 
+  // middle circle
+  DrawCircle(GetScreenWidth()/2, GetScreenHeight()/2 , 20, fieldColor);
+
   // middle line
   drawFieldLine_(
       GetScreenWidth()/2 - linesThickness / 2,

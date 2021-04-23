@@ -56,6 +56,7 @@ void drawBall(const Ball* b){
 
 void processBallMovement(Ball* b){
   if (IsKeyPressed(KEY_SPACE) && b->frozen){
+    stopScoreSound();
     playWhistleSound();
     b->frozen = false;
   }

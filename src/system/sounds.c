@@ -7,6 +7,16 @@
 
 Sounds* soundsManager = NULL;
 
+Sound loadSoundResource_(const char * path) {
+  Sound snd = LoadSound(TextFormat("../res/%s", path));
+
+  if (snd.sampleCount == 0){
+    TraceLog(LOG_ERROR, "Error loading sound from: ../res/%s", path);
+  }
+
+  return snd;
+}
+
 void loadSounds() {
   if (!soundsManager){
     Sounds *s = malloc(sizeof(Sounds));
@@ -45,17 +55,11 @@ void unloadSounds() {
   UnloadSound(soundsManager->startWhistle);
   free(soundsManager);
 }
+
+void stopScoreSound() {
+  StopSound(soundsManager->score);
+}
+
 void stopGameWonSound() {
   StopSound(soundsManager->gameWon);
 }
-
-Sound loadSoundResource_(const char * path) {
-  Sound snd = LoadSound(TextFormat("../res/%s", path));
-
-  if (snd.sampleCount == 0){
-    TraceLog(LOG_ERROR, "Error loading sound from: ../res/%s", path);
-  }
-
-  return snd;
-}
-

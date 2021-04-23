@@ -15,8 +15,6 @@ typedef struct {
   Sound gameWon;
 }Sounds;
 
-Sound loadSoundResource_();
-
 void loadSounds();
 
 void unloadSounds();
@@ -30,6 +28,8 @@ void playBorderHitSound();
 void playScoreSound();
 
 void playGameWonSound();
+
+void stopScoreSound();
 
 void stopGameWonSound();
 
