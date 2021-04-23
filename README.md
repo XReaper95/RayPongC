@@ -9,6 +9,6 @@ I may implement everything there one day. Notice that collision with paddle is a
 
 ## Screenshots
 
-![game_start_image](https://github.com/XReaper95/RayPongC/tree/master/screenshots/start.png)
+![game_start_image](https://github.com/XReaper95/RayPongC/blob/master/screenshots/start.png?raw=true)
 
-![game_finish_image](https://github.com/XReaper95/RayPongC/tree/master/screenshots/finish.png)
+![game_finish_image](https://github.com/XReaper95/RayPongC/tree/master/screenshots/finish.png?raw=true)
