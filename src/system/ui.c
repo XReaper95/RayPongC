@@ -68,7 +68,7 @@ void drawGameField(){
   );
 }
 
-void drawScores(const Game* g){
+void drawScoreBoard(const Game* g){
   char scoreAsText[2];
   const int playerNameFontSize = 29;
   const int scoreFontSize = 60;

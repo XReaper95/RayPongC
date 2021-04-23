@@ -37,9 +37,7 @@ void processGameEvents(Game* g){
 }
 
 void drawGame(const Game* g){
-  // interface
   drawGameField();
-  drawScores(g);
 
   drawPaddle(g->leftPaddle);
   drawPaddle(g->rightPaddle);

@@ -12,7 +12,7 @@ void drawFieldLine_(int lineX, int lineY, int LineW, int LineH, Color color);
 
 void drawGameField();
 
-void drawScores(const Game* g);
+void drawScoreBoard(const Game* g);
 
 void drawWinMessage(Paddle p, Color color);
 

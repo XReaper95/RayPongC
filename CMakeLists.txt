@@ -3,6 +3,10 @@ project(ray_pong_c C)
 
 set(CMAKE_C_STANDARD 99)
 
+if (UNIX)
+    set(OpenGL_GL_PREFERENCE GLVND)
+endif()
+
 # RAYLIB ---------------
 
 # Set this to the minimal version you want to support
@@ -33,7 +37,8 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
 
 endif()
 
-# RAYLIB ---------------
+# END RAYLIB ---------------
+
 
 set (SOURCES
         src/main.c
