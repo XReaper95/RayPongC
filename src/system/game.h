@@ -23,8 +23,10 @@ void updateScore(Game* g);
 
 void drawGame(const Game* g);
 
-void checkFinishGame(Game* g, const Paddle* p);
+void checkFinishGame(Game* g, Paddle *p);
 
 void cleanUpGame(Game* g);
+
+Game * processGameReset(Game* g);
 
 #endif //RAY_PONG_C_SRC_SYSTEM_GAME_H_

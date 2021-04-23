@@ -13,7 +13,7 @@ extern Game *game;
 static const float fixedBallRadius = 15.0f;
 static const int maxInitialArcAngleDeg = 45;
 
-static const double fixedBallSpeedFactor = 300.0;
+static const double fixedBallSpeedFactor = 450.0;
 
 static double getAngleInRadians_(int angle){
   double resultInRadians = (double)angle * PI / 180;
@@ -57,7 +57,7 @@ void drawBall(const Ball* b){
 }
 
 void processBallMovement(Ball* b){
-  if (IsKeyDown(KEY_SPACE) && b->frozen){
+  if (IsKeyPressed(KEY_SPACE) && b->frozen){
     b->frozen = false;
   }
 

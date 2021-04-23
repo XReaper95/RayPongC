@@ -31,6 +31,7 @@ Paddle* createPaddle(const char *name, Color color, bool leftPaddle, const Contr
 
   p->size.x = paddleFixedWidth;
   p->size.y = paddleFixedHeight;
+  p->won = false;
   return p;
 }
 

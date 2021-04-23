@@ -26,7 +26,11 @@ int main(void)
     SetWindowTitle(TextFormat("%s FPS - %d", winTitle, GetFPS()));
 
     // EVENTS
-    if (!game->isWon) processGameEvents(game);
+    if (!game->isWon) {
+      processGameEvents(game);
+    } else {
+      game = processGameReset(game);
+    }
 
     // DRAW
     BeginDrawing();

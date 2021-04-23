@@ -2,6 +2,7 @@
 // Created by Luis on 19/04/2021.
 //
 
+#include <stdio.h>
 #include "ui.h"
 
 void drawFieldLine_(int lineX, int lineY, int lineW, int lineH, Color color){
@@ -64,5 +65,51 @@ void drawGameField(){
       linesThickness,
       GetScreenHeight(),
       Fade(RED, 0.4f)
+  );
+}
+
+void drawScores(const Game* g){
+  char scoreAsText[2];
+  const int playerNameFontSize = 29;
+  const int scoreFontSize = 60;
+
+  // right side
+  DrawText(g->leftPaddle->name, 75, 50 , playerNameFontSize, Fade(BLUE, 0.4f));
+
+  snprintf(scoreAsText, 2, "%d", g->leftPaddle->score);
+  DrawText(scoreAsText, 110, 80, scoreFontSize, Fade(BLUE, 0.4f));
+
+  // left side
+  DrawText(g->rightPaddle->name,
+           GetScreenWidth() - MeasureText(g->rightPaddle->name, playerNameFontSize) - 75,
+           50 ,
+           playerNameFontSize,
+           Fade(RED, 0.4f));
+
+  snprintf(scoreAsText, 2, "%d", g->rightPaddle->score);
+  DrawText(scoreAsText,
+           GetScreenWidth() - MeasureText(scoreAsText, scoreFontSize) - 110,
+           80,
+           scoreFontSize,
+           Fade(RED, 0.4f));
+}
+
+void drawWinMessage(Paddle p, Color msgColor) {
+  DrawText(
+      TextFormat("Player \"%s\" won!!!", p.name),
+      110,
+      GetScreenHeight() / 3,
+      50,
+      msgColor
+  );
+}
+
+void drawResetMessage() {
+  DrawText(
+      "Press SPACE to reset game or ESCAPE to exit",
+      40,
+      400,
+      30,
+      WHITE
   );
 }

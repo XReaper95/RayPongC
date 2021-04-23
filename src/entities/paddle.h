@@ -17,6 +17,7 @@ typedef struct {
   Color color;
   int score;
   const ControlScheme *controlScheme;
+  bool won;
 } Paddle;
 
 

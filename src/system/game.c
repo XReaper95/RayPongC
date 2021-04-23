@@ -7,13 +7,13 @@
 #include "game.h"
 #include "ui.h"
 
-#define GAME_MAX_POINTS 5
+#define GAME_MAX_POINTS 1
 
 Game* createGame(void){
   Game *g = malloc(sizeof(Game));
 
-  g->leftPaddle = createPaddle("XReaper", BLUE, true, &SCHEME1);
-  g->rightPaddle = createPaddle("AI", RED, false, &SCHEME2);
+  g->leftPaddle = createPaddle("Player 1", BLUE, true, &SCHEME1);
+  g->rightPaddle = createPaddle("Player 2", RED, false, &SCHEME2);
   g->ball = createBall();
   g->isWon = false;
 
@@ -39,6 +39,7 @@ void processGameEvents(Game* g){
 void drawGame(const Game* g){
   // interface
   drawGameField();
+  drawScores(g);
 
   drawPaddle(g->leftPaddle);
   drawPaddle(g->rightPaddle);
@@ -80,12 +81,37 @@ void updateScore(Game* g){
     free(g->ball);
     g->ball = createBall();
   }
-
 }
 
-void checkFinishGame(Game* g, const Paddle* p){
+void checkFinishGame(Game* g, Paddle *p){
   if (p->score >= GAME_MAX_POINTS){
-    TraceLog(LOG_INFO, "Player %s won!", p->name);
+    p->won = true;
     g->isWon = true;
+  }
+}
+
+Game* processGameReset(Game *g) {
+  if (g->isWon){
+    Color msgColor;
+    Paddle p;
+
+    if (g->leftPaddle->won){
+      msgColor = g->leftPaddle->color;
+      p = *g->leftPaddle;
+    } else {
+      msgColor = g->rightPaddle->color;
+      p = *g->rightPaddle;
+    }
+
+    drawWinMessage(p, msgColor);
+
+    drawResetMessage();
+  }
+
+  if (IsKeyPressed(KEY_SPACE) && g->isWon){
+    free(g);
+    return createGame();
+  } else {
+    return g;
   }
 }
