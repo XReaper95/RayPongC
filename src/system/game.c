@@ -7,7 +7,7 @@
 #include "game.h"
 #include "ui.h"
 
-#define GAME_MAX_POINTS 1
+#define GAME_MAX_POINTS 5
 
 Game* createGame(void){
   Game *g = malloc(sizeof(Game));
