@@ -13,7 +13,7 @@
 static const float fixedBallRadius = 15.0f;
 static const int maxInitialArcAngleDeg = 45;
 
-static const double fixedBallSpeedFactor = 450.0;
+static const double fixedBallSpeedFactor = 530.0;
 
 static double getAngleInRadians_(int angle){
   double resultInRadians = (double)angle * PI / 180;

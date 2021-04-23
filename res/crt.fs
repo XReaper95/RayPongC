@@ -41,9 +41,19 @@ void main()
   finalColor = vec4(col * lines, 1.0);
 
   // film grain
-  vec2 uvr = fragTexCoord;
+  vec2 uvr = uvc;
   uvr.y *= rand(vec2(uvr.y, time));
   finalColor.rgb += finalColor.rgb * (rand(uvr) * 0.5);
+
+   // scanlines
+   float frequency = renderHeight/5.0;
+   float globalPos = uvc.y * frequency;
+   float wavePos = cos((fract(globalPos) - 0.8)*3.14);
+
+   // Texel color fetching from texture sampler
+   vec4 texelColor = texture(texture0, uvc);
+
+   finalColor = mix(finalColor, texelColor, wavePos);
 
   // edge colors (black)
   if (uvc.x < 0 || uvc.x > 1.0 || uvc.y < 0 || uvc.y > 1.0)
