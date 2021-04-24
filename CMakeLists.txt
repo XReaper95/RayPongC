@@ -7,6 +7,17 @@ if (UNIX)
     set(OpenGL_GL_PREFERENCE GLVND)
 endif()
 
+# set linker flags on Windows to void console in background in release (must be done before compiling raylib)
+if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL Release)
+    if (MINGW)
+        add_link_options(-mwindows)
+    endif()
+
+    if(MSVC)
+        add_link_options(/subsystem:windows /entry:mainCRTStartup)
+    endif()
+endif()
+
 # RAYLIB ---------------
 
 # Set this to the minimal version you want to support
@@ -39,7 +50,6 @@ endif()
 
 # END RAYLIB ---------------
 
-
 set (SOURCES
         src/main.c
         src/entities/paddle.c
@@ -51,3 +61,4 @@ set (SOURCES
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} raylib)
+

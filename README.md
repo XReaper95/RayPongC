@@ -11,4 +11,6 @@ I may implement everything there one day. Notice that collision with paddle is a
 
 ![game_start_image](https://github.com/XReaper95/RayPongC/blob/master/screenshots/start.png?raw=true)
 
+<hr>
+
 ![game_finish_image](https://github.com/XReaper95/RayPongC/blob/master/screenshots/finish.png?raw=true)
