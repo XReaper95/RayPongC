@@ -5,7 +5,6 @@
 #ifndef RAY_PONG_C_SRC_ENTITIES_BALL_H_
 #define RAY_PONG_C_SRC_ENTITIES_BALL_H_
 
-#include "raylib.h"
 #include "paddle.h"
 
 typedef struct {
@@ -26,9 +25,9 @@ Ball* createBall();
 
 void drawBall(const Ball* b);
 
-void ballBorderCollision(Ball* b);
+void checkBallBorderCollision(Ball* b);
 
-void ballPaddleCollision(Ball* b, Paddle *p);
+void checkBallPaddleCollision(Ball* b, Paddle *p);
 
 void processBallMovement(Ball* b);
 

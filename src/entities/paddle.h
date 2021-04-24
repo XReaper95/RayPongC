@@ -5,6 +5,8 @@
 #ifndef RAYLIB_C_SRC_PLAYER_H_
 #define RAYLIB_C_SRC_PLAYER_H_
 
+#include "raylib.h"
+
 typedef struct {
   KeyboardKey UP_KEY;
   KeyboardKey DOWN_KEY;
@@ -37,5 +39,7 @@ Paddle* createPaddle(const char *name, Color color, bool leftPaddle, const Contr
 void drawPaddle(const Paddle* p);
 
 void processInput(Paddle* p);
+
+bool checkWon(Paddle *p, int max_points);
 
 #endif //RAYLIB_C_SRC_PLAYER_H_

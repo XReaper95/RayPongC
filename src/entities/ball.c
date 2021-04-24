@@ -4,8 +4,10 @@
 
 #include <malloc.h>
 #include <math.h>
-#include "ball.h"
+
 #include "raylib.h"
+
+#include "ball.h"
 #include "../system/sounds.h"
 
 static const float fixedBallRadius = 15.0f;
@@ -88,7 +90,7 @@ void processBallMovement(Ball* b){
   }
 }
 
-void ballBorderCollision(Ball* b){
+void checkBallBorderCollision(Ball* b){
   double velocityY = b->velY * GetFrameTime();
 
   // collide with bottom border
@@ -103,7 +105,7 @@ void ballBorderCollision(Ball* b){
 
 }
 
-void ballPaddleCollision(Ball* b, Paddle *p){
+void checkBallPaddleCollision(Ball* b, Paddle *p){
   float velocityX = (float)b->velX * GetFrameTime();
   float velocityY = (float)b->velY * GetFrameTime();
 

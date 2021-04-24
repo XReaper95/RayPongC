@@ -9,7 +9,9 @@
 
 #define GAME_MAX_POINTS 5
 
-Game* createGame(void){
+Game* game = NULL;
+
+void createGame() {
   Game *g = malloc(sizeof(Game));
 
   g->leftPaddle = createPaddle("Player 1", BLUE, true, &SCHEME1);
@@ -17,99 +19,86 @@ Game* createGame(void){
   g->ball = createBall();
   g->isWon = false;
 
-  return g;
+  game = g;
 }
 
-void processGameEvents(Game* g){
-  processInput(g->leftPaddle);
-  processInput(g->rightPaddle);
+void processGameEvents(){
+  processInput(game->leftPaddle);
+  processInput(game->rightPaddle);
 
-  ballBorderCollision(g->ball);
+  checkBallBorderCollision(game->ball);
 
-  if (!g->ball->disablePaddleCollision){
+  if (!game->ball->disablePaddleCollision){
 
-    ballPaddleCollision(g->ball, g->leftPaddle);
-    ballPaddleCollision(g->ball, g->rightPaddle);
+    checkBallPaddleCollision(game->ball, game->leftPaddle);
+    checkBallPaddleCollision(game->ball, game->rightPaddle);
   }
 
-  processBallMovement(g->ball);
-  updateScore(g);
+  processBallMovement(game->ball);
+  updateScore(game);
 }
 
-void drawGame(const Game* g){
+void drawGame(){
   drawGameField();
 
-  drawPaddle(g->leftPaddle);
-  drawPaddle(g->rightPaddle);
-  drawBall(g->ball);
+  drawPaddle(game->leftPaddle);
+  drawPaddle(game->rightPaddle);
+  drawBall(game->ball);
 }
 
-void cleanUpGame(Game* g){
-  free(g->leftPaddle);
-  free(g->rightPaddle);
-  free(g->ball);
-  free(g);
+void cleanUpGame(){
+  free(game->leftPaddle);
+  free(game->rightPaddle);
+  free(game->ball);
+  free(game);
 }
 
-void updateScore(Game* g){
-  float ballX = g->ball->pos.x;
-  float ballRadius = g->ball->radius;
+void updateScore(){
+  float ballX = game->ball->pos.x;
+  float ballRadius = game->ball->radius;
   float screenW = (float)GetScreenWidth();
   bool scored = false;
 
   // right score
   if (ballX  < 0 - ballRadius - 30){
     scored = true;
-    g->rightPaddle->score += 1;
-
-    checkFinishGame(g, g->rightPaddle);
-
+    game->rightPaddle->score += 1;
+    game->isWon = checkWon(game->rightPaddle, GAME_MAX_POINTS);
   }
 
   // left score
   if ( ballX  > screenW + ballRadius + 30){
     scored = true;
-    g->leftPaddle->score += 1;
-
-    checkFinishGame(g, g->leftPaddle);
+    game->leftPaddle->score += 1;
+    game->isWon = checkWon(game->rightPaddle, GAME_MAX_POINTS);
   }
 
   // reset ball position
   if (scored){
     playScoreSound();
-    free(g->ball);
-    g->ball = createBall();
+    free(game->ball);
+    game->ball = createBall();
   }
 }
 
-void checkFinishGame(Game* g, Paddle *p){
-  if (p->score >= GAME_MAX_POINTS){
-    playGameWonSound();
-    p->won = true;
-    g->isWon = true;
-  }
-}
-
-Game* processGameReset(Game *g) {
-  if (g->isWon && IsKeyPressed(KEY_SPACE)){
+void processGameReset() {
+  if (game->isWon && IsKeyPressed(KEY_SPACE)){
       stopGameWonSound();
-      free(g);
-      return createGame();
-  } else {
-    return g;
+      free(game);
+      createGame();
   }
 }
 
-void processWonState(Game *g) {
+void processWonState() {
   Color msgColor;
   Paddle p;
 
-  if (g->leftPaddle->won){
-    msgColor = g->leftPaddle->color;
-    p = *g->leftPaddle;
+  if (game->leftPaddle->won){
+    msgColor = game->leftPaddle->color;
+    p = *game->leftPaddle;
   } else {
-    msgColor = g->rightPaddle->color;
-    p = *g->rightPaddle;
+    msgColor = game->rightPaddle->color;
+    p = *game->rightPaddle;
   }
 
   drawWinMessage(p, msgColor);

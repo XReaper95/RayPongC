@@ -14,24 +14,22 @@ typedef struct {
   Paddle *rightPaddle;
   Ball *ball;
   bool isWon;
-
-  Sounds* sounds;
 } Game;
 
-Game* createGame(void);
+extern Game* game;
 
-void processGameEvents(Game* g);
+void createGame();
 
-void processWonState(Game* g);
+void processGameEvents();
 
-void updateScore(Game* g);
+void processWonState();
 
-void drawGame(const Game* g);
+void updateScore();
 
-void checkFinishGame(Game* g, Paddle *p);
+void drawGame();
 
-void cleanUpGame(Game* g);
+void cleanUpGame();
 
-Game * processGameReset(Game* g);
+void processGameReset();
 
 #endif //RAY_PONG_C_SRC_SYSTEM_GAME_H_

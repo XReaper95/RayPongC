@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include "ui.h"
+#include "game.h"
 
 void drawFieldLine_(int lineX, int lineY, int lineW, int lineH, Color color){
   DrawRectangle(lineX, lineY, lineW, lineH, color);
@@ -71,25 +72,25 @@ void drawGameField(){
   );
 }
 
-void drawScoreBoard(const Game* g){
+void drawScoreBoard(){
   char scoreAsText[2];
   const int playerNameFontSize = 29;
   const int scoreFontSize = 60;
 
   // right side
-  DrawText(g->leftPaddle->name, 75, 50 , playerNameFontSize, Fade(BLUE, 0.4f));
+  DrawText(game->leftPaddle->name, 75, 50 , playerNameFontSize, Fade(BLUE, 0.4f));
 
-  snprintf(scoreAsText, 2, "%d", g->leftPaddle->score);
+  snprintf(scoreAsText, 2, "%d", game->leftPaddle->score);
   DrawText(scoreAsText, 110, 80, scoreFontSize, Fade(BLUE, 0.4f));
 
   // left side
-  DrawText(g->rightPaddle->name,
-           GetScreenWidth() - MeasureText(g->rightPaddle->name, playerNameFontSize) - 75,
+  DrawText(game->rightPaddle->name,
+           GetScreenWidth() - MeasureText(game->rightPaddle->name, playerNameFontSize) - 75,
            50 ,
            playerNameFontSize,
            Fade(RED, 0.4f));
 
-  snprintf(scoreAsText, 2, "%d", g->rightPaddle->score);
+  snprintf(scoreAsText, 2, "%d", game->rightPaddle->score);
   DrawText(scoreAsText,
            GetScreenWidth() - MeasureText(scoreAsText, scoreFontSize) - 110,
            80,

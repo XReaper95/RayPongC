@@ -4,8 +4,8 @@
 
 #include <stdlib.h>
 
-#include "raylib.h"
 #include "paddle.h"
+#include "../system/sounds.h"
 
 static const float paddleFixedHeight = 100.0f;
 static const float paddleFixedWidth = 30.0f;
@@ -46,4 +46,13 @@ void processInput(Paddle* p){
   if (IsKeyDown(p->controlScheme->DOWN_KEY) && p->pos.y + p->size.y< (float)GetScreenHeight()) { // Down
     p->pos.y += paddleMovementFactor * (float)GetFrameTime();
   }
+}
+
+bool checkWon(Paddle *p, int max_points){
+  if (p->score >= max_points){
+    playGameWonSound();
+    p->won = true;
+  }
+
+  return p->won;
 }

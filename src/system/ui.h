@@ -6,13 +6,13 @@
 #define RAY_PONG_C_SRC_SYSTEM_UI_H_
 
 #include "raylib.h"
-#include "game.h"
+#include "../entities/paddle.h"
 
 void drawFieldLine_(int lineX, int lineY, int LineW, int LineH, Color color);
 
 void drawGameField();
 
-void drawScoreBoard(const Game* g);
+void drawScoreBoard();
 
 void drawWinMessage(Paddle p, Color color);
 

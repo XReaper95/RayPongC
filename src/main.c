@@ -22,11 +22,11 @@ int main(void)
 
   loadSounds();
 
-  // Create a RenderTexture2D to be used for render to texture
+  createGame();
+
+  // SHADERS
   RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
   Shader shader = LoadShader(0, "../res/crt.fs");
-
-  Game *game = createGame();
   Color backgroundColor = ColorFromHSV(207, 0.47f, 0.15f);
 
   // Main game loop
@@ -40,7 +40,7 @@ int main(void)
     if (!game->isWon) {
       processGameEvents(game);
     } else {
-      game = processGameReset(game);
+      processGameReset(game);
     }
 
     ClearBackground(backgroundColor);
@@ -71,7 +71,7 @@ int main(void)
   // DE-INITIALIZE
   cleanUpGame(game);
 
-  unloadSounds(game->sounds);
+  unloadSounds();
   CloseAudioDevice();
   UnloadRenderTexture(target);
   CloseWindow();        // Close window and OpenGL context
