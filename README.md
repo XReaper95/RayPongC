@@ -12,6 +12,11 @@ I may implement everything there one day. Notice that collision with paddle is a
 Use SPACE to randomly throw the ball to any direction (limited by a small arc to each side). Use W and A keys to control
 Player 1 and UP and DOWN to control Player 2. Game is goal is 5 points.
 
+## Play
+
+There are builds in the `Releases` tabs, will work on `Windows`, `Mac` and `Linux`. You can compile it yourself with `CMake`
+if you know how. There are no dependencies beisdes `raylib`, that is downloaded and built automatically.
+
 ## Screenshots
 
 ![game_start_image](https://github.com/XReaper95/RayPongC/blob/master/screenshots/start.png?raw=true)
