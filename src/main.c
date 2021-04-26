@@ -52,6 +52,7 @@ int main(void)
         drawGame(game);
       EndTextureMode();
 
+
       BeginShaderMode(shader);
         DrawTextureRec(target.texture,
                        (Rectangle){ 0, 0, (float)target.texture.width, (float)-target.texture.height },
