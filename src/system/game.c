@@ -70,7 +70,7 @@ void updateScore(){
   if ( ballX  > screenW + ballRadius + 30){
     scored = true;
     game->leftPaddle->score += 1;
-    game->isWon = checkWon(game->rightPaddle, GAME_MAX_POINTS);
+    game->isWon = checkWon(game->leftPaddle, GAME_MAX_POINTS);
   }
 
   // reset ball position
