@@ -2,7 +2,7 @@
 // Created by Luis on 08/04/2021.
 //
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <math.h>
 
 #include "raylib.h"

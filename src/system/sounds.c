@@ -2,7 +2,7 @@
 // Created by Luis on 22/04/2021.
 //
 
-#include <malloc.h>
+#include <stdlib.h>
 #include "sounds.h"
 
 Sounds* soundsManager = NULL;
