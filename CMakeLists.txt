@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.11) # FetchContent is available in 3.11+
+cmake_minimum_required(VERSION 3.12) # CONFIGURE_DEPENDS is available in 3.12+
 project(ray_pong_c C)
 
-set(CMAKE_C_STANDARD 99)
+set(C_STANDARD C89)
 
 if (UNIX)
     set(OpenGL_GL_PREFERENCE GLVND)
@@ -51,7 +51,7 @@ endif()
 # END RAYLIB ---------------
 
 # add source code
-file(GLOB SOURCES "src/*.c" "src/game/*.c")
+file(GLOB SOURCES CONFIGURE_DEPENDS "src/*.c" "src/game/*.c")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} raylib)
