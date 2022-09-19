@@ -26,7 +26,7 @@ static Sound LoadSoundResource(const char * path) {
   return snd;
 }
 
-void LoadGameSounds() {
+void SoundsLoadAll() {
   if (!soundsManager.initialized){
     soundsManager.startWhistle = LoadSoundResource("referee_whistle.wav");
     soundsManager.paddleHit = LoadSoundResource("wood_hit.wav");
@@ -38,30 +38,30 @@ void LoadGameSounds() {
   }
 }
 
-void PlayWhistleSound() {
+void SoundsPlayWhistle() {
   PlaySound(soundsManager.startWhistle);
 }
 
-void PlayPaddleHitSound() {
+void SoundsPlayPaddleHit() {
   PlaySound(soundsManager.paddleHit);
 }
 
-void PlayBorderHitSound() {
+void SoundsPlayBorderHit() {
   PlaySound(soundsManager.borderHit);
 }
 
-void PlayScoreSound() {
+void SoundsPlayScore() {
   PlaySound(soundsManager.score);
 }
 
-void PlayGameWonSound() {
+void SoundsPlayGameWon() {
   PlaySound(soundsManager.gameWon);
 }
 
-void StopScoreSound() {
+void SoundsStopScore() {
   StopSound(soundsManager.score);
 }
 
-void StopGameWonSound() {
+void SoundsStopGameWon() {
   StopSound(soundsManager.gameWon);
 }

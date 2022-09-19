@@ -18,11 +18,11 @@ typedef struct{
   Paddle* winner;
 } Game;
 
-Game CreateGame();
-void ProcessGameEvents(Game* game);
-void ProcessWonState(Game* game);
-void DrawGame(Game* game);
-void ProcessGameReset(Game* game);
+Game GameCreate();
+void GameProcessEvents(Game* game);
+void GameProcessWonState(Game* game);
+void GameDraw(Game* game);
+void GameReset(Game* game);
 bool GameHasWinner(Game* game);
 
 #endif //RAY_PONG_C_SRC_SYSTEM_GAME_H_

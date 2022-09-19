@@ -23,11 +23,11 @@ typedef struct {
   bool collideWithPaddleEnabled;
 } Ball;
 
-Ball CreateBall();
-void ResetBallState(Ball* b);
-void DrawBall(const Ball *b);
-void CheckBallBorderCollision(Ball *b);
-void CheckBallPaddleCollision(Ball *b, const Paddle *p);
-void ProcessBallMovement(Ball *b);
+Ball BallCreate();
+void BallStateReset(Ball* b);
+void BallDraw(const Ball *b);
+void BallCheckBorderCollision(Ball *b);
+void BallCheckPaddleCollision(Ball *b, const Paddle *p);
+void BallProcessMovement(Ball *b);
 
 #endif //RAY_PONG_C_SRC_ENTITIES_BALL_H_

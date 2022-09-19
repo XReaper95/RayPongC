@@ -13,7 +13,7 @@ static double AngleToRadians(int angle){
   return resultInRadians;
 }
 
-static double GetBallInitialRandomAngle(){
+static double GetInitialRandomAngle(){
   int result;
   int selectRightOrLeft = GetRandomValue(0, 1);
 
@@ -26,8 +26,8 @@ static double GetBallInitialRandomAngle(){
   return AngleToRadians(result);
 }
 
-Ball CreateBall(){
-  double initialAngle = GetBallInitialRandomAngle();
+Ball BallCreate(){
+  double initialAngle = GetInitialRandomAngle();
   Ball b = {
       .radius = fixedBallRadius,
       .velX = fixedBallSpeedFactor * cos(initialAngle),
@@ -35,12 +35,12 @@ Ball CreateBall(){
       .color = YELLOW
   };
 
-  ResetBallState(&b);
+  BallStateReset(&b);
 
   return b;
 }
 
-void ResetBallState(Ball *b){
+void BallStateReset(Ball *b){
   b->pos.x = (float)GetScreenWidth() / 2;
   b->pos.y = (float)GetScreenHeight() / 2;
   b->frozen = true;
@@ -50,14 +50,14 @@ void ResetBallState(Ball *b){
   b->collideWithPaddleEnabled = false;
 }
 
-void DrawBall(const Ball * b){
+void BallDraw(const Ball * b){
   DrawCircleV(b->pos, b->radius, b->color);
 }
 
-void ProcessBallMovement(Ball * b){
+void BallProcessMovement(Ball * b){
   if (IsKeyPressed(KEY_SPACE) && b->frozen){
-    StopScoreSound();
-    PlayWhistleSound();
+    SoundsStopScore();
+    SoundsPlayWhistle();
     b->frozen = false;
   }
 
@@ -66,18 +66,18 @@ void ProcessBallMovement(Ball * b){
     double velocityY = b->velY * GetFrameTime();
 
     if (b->screenEdgeCollision) {
-      PlayBorderHitSound();
+      SoundsPlayBorderHit();
       b->velY *= -1.0f;
       b->screenEdgeCollision = false;
     }
     if (b->paddleSideCollision) {
-      PlayPaddleHitSound();
+      SoundsPlayPaddleHit();
       b->velX *= -1.0f;
       b->paddleSideCollision = false;
 
     }
     if (b->paddleTBCollision) {
-      PlayPaddleHitSound();
+      SoundsPlayPaddleHit();
       b->velY *= -1.0f;
       b->paddleTBCollision = false;
       b->collideWithPaddleEnabled = true;
@@ -88,7 +88,7 @@ void ProcessBallMovement(Ball * b){
   }
 }
 
-void CheckBallBorderCollision(Ball * b){
+void BallCheckBorderCollision(Ball * b){
   double velocityY = b->velY * GetFrameTime();
 
   // collide with bottom border
@@ -103,7 +103,7 @@ void CheckBallBorderCollision(Ball * b){
 
 }
 
-void CheckBallPaddleCollision(Ball * b, const Paddle *p){
+void BallCheckPaddleCollision(Ball * b, const Paddle *p){
   float velocityX = (float)b->velX * GetFrameTime();
   float velocityY = (float)b->velY * GetFrameTime();
 

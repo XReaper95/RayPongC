@@ -9,9 +9,9 @@
 #include "raylib.h"
 #include "paddle.h"
 
-void DrawGameField();
-void DrawScoreBoard(Paddle* leftPaddle, Paddle* rightPaddle);
-void DrawWinMessage(Paddle * p);
-void DrawResetMessage();
+void UIDrawGameField();
+void UIDrawScoreBoard(Paddle* leftPaddle, Paddle* rightPaddle);
+void UIDrawWinMessage(Paddle * p);
+void UIDrawResetMessage();
 
 #endif //RAY_PONG_C_SRC_SYSTEM_UI_H_

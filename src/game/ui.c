@@ -8,7 +8,7 @@ static void DrawFieldLine(int lineX, int lineY, int lineW, int lineH, Color colo
   DrawRectangle(lineX, lineY, lineW, lineH, color);
 }
 
-void DrawGameField(){
+void UIDrawGameField(){
   Color fieldColor = LIGHTGRAY;
 
   // middle ring
@@ -45,7 +45,7 @@ void DrawGameField(){
                 GetScreenHeight(), Fade(RED, 0.4f));
 }
 
-void DrawScoreBoard(Paddle* leftPaddle, Paddle* rightPaddle){
+void UIDrawScoreBoard(Paddle* leftPaddle, Paddle* rightPaddle){
   char scoreAsText[2];
   const int playerNameFontSize = 29;
   const int scoreFontSize = 60;
@@ -71,7 +71,7 @@ void DrawScoreBoard(Paddle* leftPaddle, Paddle* rightPaddle){
            Fade(RED, 0.4f));
 }
 
-void DrawWinMessage(Paddle * p) {
+void UIDrawWinMessage(Paddle * p) {
   DrawText(
       TextFormat("Player \"%s\" won!!!", p->name),
       110,
@@ -81,7 +81,7 @@ void DrawWinMessage(Paddle * p) {
   );
 }
 
-void DrawResetMessage() {
+void UIDrawResetMessage() {
   DrawText(
       "Press SPACE to reset game or ESCAPE to exit",
       40,

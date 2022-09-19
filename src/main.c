@@ -17,14 +17,14 @@ int main()
   InitWindow(screenWidth, screenHeight, windowsTitle);
   SetTargetFPS(targetFPS); // Set desired framerate (frames-per-second)
   InitAudioDevice();
-  LoadGameSounds();
+  SoundsLoadAll();
 
   // SHADERS
   RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
   Shader shader = LoadShader(0, "../res/crt.fs");
   Color backgroundColor = ColorFromHSV(207, 0.47f, 0.15f);
 
-  Game game = CreateGame();
+  Game game = GameCreate();
 
   // Main game loop
   while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -34,9 +34,9 @@ int main()
 
     // EVENTS
     if (!GameHasWinner(&game)) {
-      ProcessGameEvents(&game);
+      GameProcessEvents(&game);
     } else {
-      ProcessGameReset(&game);
+      GameReset(&game);
     }
 
     ClearBackground(backgroundColor);
@@ -45,7 +45,7 @@ int main()
     BeginDrawing();
       BeginTextureMode(target);
         ClearBackground(backgroundColor);
-        DrawGame(&game);
+        GameDraw(&game);
       EndTextureMode();
 
 
@@ -56,10 +56,10 @@ int main()
                        WHITE);
       EndShaderMode();
 
-      DrawScoreBoard(&game.leftPaddle, &game.rightPaddle);
+      UIDrawScoreBoard(&game.leftPaddle, &game.rightPaddle);
 
     if (GameHasWinner(&game)){
-      ProcessWonState(&game);
+      GameProcessWonState(&game);
     }
 
     EndDrawing();
