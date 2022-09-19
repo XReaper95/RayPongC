@@ -17,15 +17,15 @@ int main(void)
 
   char winTitle[] = "Pong with Raylib";
   InitWindow(screenWidth, screenHeight, winTitle);
-  SetTargetFPS(targetFPS);               // Set desired framerate (frames-per-second)
+  SetTargetFPS(targetFPS); // Set desired framerate (frames-per-second)
 
   // INITIALIZE
   InitAudioDevice();
 
-  loadSounds();
+  LoadGameSounds();
 
   // Entities
-  Game game = createGame();
+  Game game = CreateGame();
   // SHADERS
   RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
   Shader shader = LoadShader(0, "../res/crt.fs");
@@ -40,9 +40,9 @@ int main(void)
 
     // EVENTS
     if (game.winner == NULL) {
-      processGameEvents(&game);
+      ProcessGameEvents(&game);
     } else {
-      processGameReset(&game);
+      ProcessGameReset(&game);
     }
 
     ClearBackground(backgroundColor);
@@ -51,7 +51,7 @@ int main(void)
     BeginDrawing();
       BeginTextureMode(target);
         ClearBackground(backgroundColor);
-        drawGame(&game);
+        DrawGame(&game);
       EndTextureMode();
 
 
@@ -62,20 +62,19 @@ int main(void)
                        WHITE);
       EndShaderMode();
 
-      drawScoreBoard(&game);
+      DrawScoreBoard(&game);
 
     if (game.winner != NULL){
-      processWonState(&game);
+      ProcessWonState(&game);
     }
 
     EndDrawing();
   }
 
-  unloadSounds();
+  UnloadGameSounds();
   CloseAudioDevice();
   UnloadRenderTexture(target);
   CloseWindow();        // Close window and OpenGL context
-
 
   return 0;
 }

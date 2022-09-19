@@ -12,25 +12,25 @@
 
 #define GAME_MAX_POINTS 5
 
-static bool checkWinner(Paddle *p){
+static bool CheckWinner(Paddle *p){
   if (p->score >= GAME_MAX_POINTS){
-    playGameWonSound();
+    PlayGameWonSound();
     return true;
   } else {
     return false;
   }
 }
 
-static void resetGame(Game *game){
+static void ResetGame(Game *game){
   game->winner = NULL;
-  resetBallState(&game->ball);
-  resetPaddleState(&game->leftPaddle, true);
-  resetPaddleState(&game->rightPaddle, false);
-  stopScoreSound();
-  stopGameWonSound();
+  ResetBallState(&game->ball);
+  ResetPaddleState(&game->leftPaddle, true);
+  ResetPaddleState(&game->rightPaddle, false);
+  StopScoreSound();
+  StopGameWonSound();
 }
 
-static void updateScore(Game* game){
+static void UpdateScore(Game* game){
   float ballX = game->ball.pos.x;
   float ballRadius = game->ball.radius;
   float screenW = (float)GetScreenWidth();
@@ -40,7 +40,7 @@ static void updateScore(Game* game){
   if (ballX  < 0 - ballRadius - 30){
     scored = true;
     UpdatePlayerScore(&game->rightPaddle);
-    if (checkWinner(&game->rightPaddle)){
+    if (CheckWinner(&game->rightPaddle)){
       game->winner = &game->rightPaddle;
     }
   }
@@ -49,56 +49,56 @@ static void updateScore(Game* game){
   if ( ballX  > screenW + ballRadius + 30){
     scored = true;
     UpdatePlayerScore(&game->leftPaddle);
-    if (checkWinner(&game->leftPaddle)){
+    if (CheckWinner(&game->leftPaddle)){
       game->winner = &game->leftPaddle;
     }
   }
 
   // reset ball position
   if (scored){
-    playScoreSound();
-    resetBallState(&game->ball);
+    PlayScoreSound();
+    ResetBallState(&game->ball);
   }
 }
 
-Game createGame() {
+Game CreateGame() {
   return (Game){
-    .leftPaddle = createPaddle("Player 1", BLUE, true, &SCHEME1),
-    .rightPaddle = createPaddle("Player 2", RED, false, &SCHEME2),
-    .ball = createBall()
+    .leftPaddle = CreatePaddle("Player 1", BLUE, true, &SCHEME1),
+    .rightPaddle = CreatePaddle("Player 2", RED, false, &SCHEME2),
+    .ball = CreateBall()
   };
 }
 
-void processGameEvents(Game* game){
-  processInput(&game->leftPaddle);
-  processInput(&game->rightPaddle);
+void ProcessGameEvents(Game* game){
+  ProcessInput(&game->leftPaddle);
+  ProcessInput(&game->rightPaddle);
 
-  checkBallBorderCollision(&game->ball);
+  CheckBallBorderCollision(&game->ball);
 
   if (!game->ball.collideWithPaddleEnabled) {
-    checkBallPaddleCollision(&game->ball, &game->leftPaddle);
-    checkBallPaddleCollision(&game->ball, &game->rightPaddle);
+    CheckBallPaddleCollision(&game->ball, &game->leftPaddle);
+    CheckBallPaddleCollision(&game->ball, &game->rightPaddle);
   }
 
-  processBallMovement(&game->ball);
-  updateScore(game);
+  ProcessBallMovement(&game->ball);
+  UpdateScore(game);
 }
 
-void drawGame(Game * game){
-  drawGameField();
+void DrawGame(Game * game){
+  DrawGameField();
 
-  drawPaddle(&game->leftPaddle);
-  drawPaddle(&game->rightPaddle);
-  drawBall(&game->ball);
+  DrawPaddle(&game->leftPaddle);
+  DrawPaddle(&game->rightPaddle);
+  DrawBall(&game->ball);
 }
 
-void processGameReset(Game* game) {
+void ProcessGameReset(Game* game) {
   if (game->winner != NULL && IsKeyPressed(KEY_SPACE)){
-    resetGame(game);
+    ResetGame(game);
   }
 }
 
-void processWonState(Game*  game) {
+void ProcessWonState(Game*  game) {
   Paddle* p;
 
   if (game->winner == &game->leftPaddle){
@@ -107,6 +107,6 @@ void processWonState(Game*  game) {
     p = &game->rightPaddle;
   }
 
-  drawWinMessage(p);
-  drawResetMessage();
+  DrawWinMessage(p);
+  DrawResetMessage();
 }

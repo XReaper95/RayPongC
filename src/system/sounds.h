@@ -7,14 +7,14 @@
 
 #include <raylib.h>
 
-void loadSounds();
-void unloadSounds();
-void playWhistleSound();
-void playPaddleHitSound();
-void playBorderHitSound();
-void playScoreSound();
-void playGameWonSound();
-void stopScoreSound();
-void stopGameWonSound();
+void LoadGameSounds();
+void UnloadGameSounds();
+void PlayWhistleSound();
+void PlayPaddleHitSound();
+void PlayBorderHitSound();
+void PlayScoreSound();
+void PlayGameWonSound();
+void StopScoreSound();
+void StopGameWonSound();
 
 #endif //RAY_PONG_C_SRC_SYSTEM_SOUNDS_H_

@@ -15,10 +15,10 @@ typedef struct{
   Paddle* winner;
 } Game;
 
-Game createGame();
-void processGameEvents(Game* game);
-void processWonState(Game* game);
-void drawGame(Game* game);
-void processGameReset(Game* game);
+Game CreateGame();
+void ProcessGameEvents(Game* game);
+void ProcessWonState(Game* game);
+void DrawGame(Game* game);
+void ProcessGameReset(Game* game);
 
 #endif //RAY_PONG_C_SRC_SYSTEM_GAME_H_

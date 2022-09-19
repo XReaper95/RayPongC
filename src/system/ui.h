@@ -9,9 +9,9 @@
 #include "game.h"
 #include "../entities/paddle.h"
 
-void drawGameField();
-void drawScoreBoard(Game* g);
-void drawWinMessage(Paddle * p);
-void drawResetMessage();
+void DrawGameField();
+void DrawScoreBoard(Game* g);
+void DrawWinMessage(Paddle * p);
+void DrawResetMessage();
 
 #endif //RAY_PONG_C_SRC_SYSTEM_UI_H_

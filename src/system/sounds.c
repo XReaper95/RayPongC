@@ -15,7 +15,7 @@ typedef struct {
 
 SoundsSingleton* soundsManager = NULL;
 
-static Sound loadSoundResource(const char * path) {
+static Sound LoadSoundResource(const char * path) {
   Sound snd = LoadSound(TextFormat("../res/%s", path));
 
   if (snd.frameCount == 0) {
@@ -25,21 +25,21 @@ static Sound loadSoundResource(const char * path) {
   return snd;
 }
 
-void loadSounds() {
+void LoadGameSounds() {
   if (!soundsManager){
     SoundsSingleton *s = malloc(sizeof(SoundsSingleton));
 
-    s->startWhistle = loadSoundResource("referee_whistle.wav");
-    s->paddleHit = loadSoundResource("wood_hit.wav");
-    s->borderHit = loadSoundResource("border_hit.wav");
-    s->score = loadSoundResource("score.wav");
-    s->gameWon = loadSoundResource("game_won_clapping.wav");
+    s->startWhistle = LoadSoundResource("referee_whistle.wav");
+    s->paddleHit = LoadSoundResource("wood_hit.wav");
+    s->borderHit = LoadSoundResource("border_hit.wav");
+    s->score = LoadSoundResource("score.wav");
+    s->gameWon = LoadSoundResource("game_won_clapping.wav");
 
     soundsManager = s;
   }
 }
 
-void unloadSounds() {
+void UnloadGameSounds() {
   UnloadSound(soundsManager->startWhistle);
   UnloadSound(soundsManager->paddleHit);
   UnloadSound(soundsManager->borderHit);
@@ -48,30 +48,30 @@ void unloadSounds() {
   free(soundsManager);
 }
 
-void playWhistleSound() {
+void PlayWhistleSound() {
   PlaySound(soundsManager->startWhistle);
 }
 
-void playPaddleHitSound() {
+void PlayPaddleHitSound() {
   PlaySound(soundsManager->paddleHit);
 }
 
-void playBorderHitSound() {
+void PlayBorderHitSound() {
   PlaySound(soundsManager->borderHit);
 }
 
-void playScoreSound() {
+void PlayScoreSound() {
   PlaySound(soundsManager->score);
 }
 
-void playGameWonSound() {
+void PlayGameWonSound() {
   PlaySound(soundsManager->gameWon);
 }
 
-void stopScoreSound() {
+void StopScoreSound() {
   StopSound(soundsManager->score);
 }
 
-void stopGameWonSound() {
+void StopGameWonSound() {
   StopSound(soundsManager->gameWon);
 }

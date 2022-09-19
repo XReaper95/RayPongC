@@ -8,7 +8,7 @@ static const float paddleFixedWidth = 30.0f;
 static const float paddleWidthMargin = 15.0f;
 static const float paddleMovementFactor = 300.0f;
 
-Paddle createPaddle(const char *name, Color color, bool isLeftPaddle, const ControlScheme *scheme){
+Paddle CreatePaddle(const char *name, Color color, bool isLeftPaddle, const ControlScheme *scheme){
   Paddle p = {
       .name = name,
       .color = color,
@@ -16,7 +16,7 @@ Paddle createPaddle(const char *name, Color color, bool isLeftPaddle, const Cont
       .size = {paddleFixedWidth, paddleFixedHeight}
   };
 
-  resetPaddleState(&p, isLeftPaddle);
+  ResetPaddleState(&p, isLeftPaddle);
 
   p.size.x = paddleFixedWidth;
   p.size.y = paddleFixedHeight;
@@ -24,7 +24,7 @@ Paddle createPaddle(const char *name, Color color, bool isLeftPaddle, const Cont
   return p;
 }
 
-void resetPaddleState(Paddle *p, bool isLeftPaddle){
+void ResetPaddleState(Paddle *p, bool isLeftPaddle){
   if (isLeftPaddle){
     p->pos.x = paddleWidthMargin;
   } else {
@@ -35,11 +35,11 @@ void resetPaddleState(Paddle *p, bool isLeftPaddle){
   p->score = 0;
 }
 
-void drawPaddle(const Paddle * p) {
+void DrawPaddle(const Paddle * p) {
   DrawRectangleV(p->pos, p->size, p->color);
 }
 
-void processInput(Paddle * p){
+void ProcessInput(Paddle * p){
   if (IsKeyDown(p->controlScheme->UP_KEY) && p->pos.y > 0.0f) { // UP
     p->pos.y -= paddleMovementFactor * (float)GetFrameTime();
   }

@@ -31,11 +31,11 @@ typedef struct{
   const ControlScheme *controlScheme;
 } Paddle;
 
-Paddle createPaddle(const char *name, Color color, bool isLeftPaddle, const ControlScheme *scheme);
-void resetPaddleState(Paddle *p, bool isLeftPaddle);
+Paddle CreatePaddle(const char *name, Color color, bool isLeftPaddle, const ControlScheme *scheme);
+void ResetPaddleState(Paddle *p, bool isLeftPaddle);
 void UpdatePlayerScore(Paddle *p);
-void drawPaddle(const Paddle * p);
-void processInput(Paddle * p);
+void DrawPaddle(const Paddle * p);
+void ProcessInput(Paddle * p);
 
 
 #endif //RAYLIB_C_SRC_PLAYER_H_

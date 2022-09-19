@@ -10,7 +10,7 @@ static void DrawFieldLine(int lineX, int lineY, int lineW, int lineH, Color colo
   DrawRectangle(lineX, lineY, lineW, lineH, color);
 }
 
-void drawGameField(){
+void DrawGameField(){
   Color fieldColor = LIGHTGRAY;
 
   // middle ring
@@ -47,25 +47,25 @@ void drawGameField(){
                 GetScreenHeight(), Fade(RED, 0.4f));
 }
 
-void drawScoreBoard(Game* game){
+void DrawScoreBoard(Game*g){
   char scoreAsText[2];
   const int playerNameFontSize = 29;
   const int scoreFontSize = 60;
 
   // right side
-  DrawText(game->leftPaddle.name, 75, 50 , playerNameFontSize, Fade(BLUE, 0.4f));
+  DrawText(g->leftPaddle.name, 75, 50 , playerNameFontSize, Fade(BLUE, 0.4f));
 
-  snprintf(scoreAsText, 2, "%d", game->leftPaddle.score);
+  snprintf(scoreAsText, 2, "%d", g->leftPaddle.score);
   DrawText(scoreAsText, 110, 80, scoreFontSize, Fade(BLUE, 0.4f));
 
   // left side
-  DrawText(game->rightPaddle.name,
-           GetScreenWidth() - MeasureText(game->rightPaddle.name, playerNameFontSize) - 75,
+  DrawText(g->rightPaddle.name,
+           GetScreenWidth() - MeasureText(g->rightPaddle.name, playerNameFontSize) - 75,
            50 ,
            playerNameFontSize,
            Fade(RED, 0.4f));
 
-  snprintf(scoreAsText, 2, "%d", game->rightPaddle.score);
+  snprintf(scoreAsText, 2, "%d", g->rightPaddle.score);
   DrawText(scoreAsText,
            GetScreenWidth() - MeasureText(scoreAsText, scoreFontSize) - 110,
            80,
@@ -73,7 +73,7 @@ void drawScoreBoard(Game* game){
            Fade(RED, 0.4f));
 }
 
-void drawWinMessage(Paddle * p) {
+void DrawWinMessage(Paddle * p) {
   DrawText(
       TextFormat("Player \"%s\" won!!!", p->name),
       110,
@@ -83,7 +83,7 @@ void drawWinMessage(Paddle * p) {
   );
 }
 
-void drawResetMessage() {
+void DrawResetMessage() {
   DrawText(
       "Press SPACE to reset game or ESCAPE to exit",
       40,
