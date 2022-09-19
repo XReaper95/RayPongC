@@ -71,7 +71,6 @@ int main(void)
     EndDrawing();
   }
 
-  UnloadGameSounds();
   CloseAudioDevice();
   UnloadRenderTexture(target);
   CloseWindow();        // Close window and OpenGL context

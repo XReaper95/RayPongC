@@ -8,7 +8,6 @@
 #include <raylib.h>
 
 void LoadGameSounds();
-void UnloadGameSounds();
 void PlayWhistleSound();
 void PlayPaddleHitSound();
 void PlayBorderHitSound();
