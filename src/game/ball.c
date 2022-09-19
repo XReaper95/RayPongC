@@ -5,7 +5,7 @@
 #include <math.h>
 #include "raylib.h"
 #include "ball.h"
-#include "../system/sounds.h"
+#include "sounds.h"
 
 static const float fixedBallRadius = 15.0f;
 static const int maxInitialArcAngleDeg = 45;

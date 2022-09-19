@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "raylib.h"
-#include "system/game.h"
-#include "system/ui.h"
-#include "system/sounds.h"
+#include "game/game.h"
+#include "game/ui.h"
+#include "game/sounds.h"
 
 int main(void)
 {

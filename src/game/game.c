@@ -4,8 +4,8 @@
 
 #include <stdlib.h>
 #include "raylib.h"
-#include "../entities/paddle.h"
-#include "../entities/ball.h"
+#include "paddle.h"
+#include "ball.h"
 #include "game.h"
 #include "sounds.h"
 #include "ui.h"

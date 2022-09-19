@@ -50,14 +50,8 @@ endif()
 
 # END RAYLIB ---------------
 
-set (SOURCES
-        src/main.c
-        src/entities/paddle.c
-        src/entities/ball.c
-        src/system/game.c
-        src/system/ui.c
-        src/system/sounds.c
-        )
+# add source code
+file(GLOB SOURCES "src/*.c" "src/game/*.c")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} raylib)

@@ -7,7 +7,7 @@
 
 #include "raylib.h"
 #include "game.h"
-#include "../entities/paddle.h"
+#include "paddle.h"
 
 void DrawGameField();
 void DrawScoreBoard(Game* g);

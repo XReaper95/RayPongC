@@ -5,8 +5,8 @@
 #ifndef RAY_PONG_C_SRC_SYSTEM_GAME_H_
 #define RAY_PONG_C_SRC_SYSTEM_GAME_H_
 
-#include "../entities/paddle.h"
-#include "../entities/ball.h"
+#include "paddle.h"
+#include "ball.h"
 
 typedef struct{
   Paddle leftPaddle;
