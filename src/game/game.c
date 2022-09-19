@@ -2,13 +2,7 @@
 // Created by Luis on 13/04/2021.
 //
 
-#include <stdlib.h>
-#include "raylib.h"
-#include "paddle.h"
-#include "ball.h"
 #include "game.h"
-#include "sounds.h"
-#include "ui.h"
 
 #define GAME_MAX_POINTS 5
 
@@ -93,7 +87,7 @@ void DrawGame(Game * game){
 }
 
 void ProcessGameReset(Game* game) {
-  if (game->winner != NULL && IsKeyPressed(KEY_SPACE)){
+  if (GameHasWinner(game) && IsKeyPressed(KEY_SPACE)){
     ResetGame(game);
   }
 }
@@ -110,3 +104,5 @@ void ProcessWonState(Game*  game) {
   DrawWinMessage(p);
   DrawResetMessage();
 }
+
+bool GameHasWinner(Game *game) { return game->winner != NULL; }

@@ -5,9 +5,11 @@
 #ifndef RAY_PONG_C_SRC_ENTITIES_BALL_H_
 #define RAY_PONG_C_SRC_ENTITIES_BALL_H_
 
+#include <math.h>
 #include "paddle.h"
+#include "sounds.h"
 
-typedef struct{
+typedef struct {
   Vector2 pos;
   float radius;
   Color color;
@@ -22,7 +24,7 @@ typedef struct{
 } Ball;
 
 Ball CreateBall();
-void ResetBallState(Ball *b);
+void ResetBallState(Ball* b);
 void DrawBall(const Ball *b);
 void CheckBallBorderCollision(Ball *b);
 void CheckBallPaddleCollision(Ball *b, const Paddle *p);

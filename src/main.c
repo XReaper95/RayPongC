@@ -1,45 +1,39 @@
-#include <stdlib.h>
 #include "raylib.h"
 #include "game/game.h"
 #include "game/ui.h"
 #include "game/sounds.h"
 
-int main(void)
+int main()
 {
-  SetTraceLogLevel(LOG_INFO);
-
-  // WINDOW
+  // CONFIGURATION
   static const int screenWidth = 800;
   static const int screenHeight = 600;
   static const int targetFPS = 60;
+  const char *windowsTitle = "Pong with Raylib";
 
+  // INITIALIZATION
+  SetTraceLogLevel(LOG_INFO);
   SetConfigFlags(FLAG_MSAA_4X_HINT);
-
-  char winTitle[] = "Pong with Raylib";
-  InitWindow(screenWidth, screenHeight, winTitle);
+  InitWindow(screenWidth, screenHeight, windowsTitle);
   SetTargetFPS(targetFPS); // Set desired framerate (frames-per-second)
-
-  // INITIALIZE
   InitAudioDevice();
-
   LoadGameSounds();
 
-  // Entities
-  Game game = CreateGame();
   // SHADERS
   RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
   Shader shader = LoadShader(0, "../res/crt.fs");
   Color backgroundColor = ColorFromHSV(207, 0.47f, 0.15f);
 
+  Game game = CreateGame();
+
   // Main game loop
   while (!WindowShouldClose())    // Detect window close button or ESC key
   {
     // UPDATE
-
-    SetWindowTitle(TextFormat("%s FPS - %d", winTitle, GetFPS()));
+    SetWindowTitle(TextFormat("%s FPS - %d", windowsTitle, GetFPS()));
 
     // EVENTS
-    if (game.winner == NULL) {
+    if (!GameHasWinner(&game)) {
       ProcessGameEvents(&game);
     } else {
       ProcessGameReset(&game);
@@ -62,18 +56,19 @@ int main(void)
                        WHITE);
       EndShaderMode();
 
-      DrawScoreBoard(&game);
+      DrawScoreBoard(&game.leftPaddle, &game.rightPaddle);
 
-    if (game.winner != NULL){
+    if (GameHasWinner(&game)){
       ProcessWonState(&game);
     }
 
     EndDrawing();
   }
 
+  // DE-INITIALIZATION
   CloseAudioDevice();
   UnloadRenderTexture(target);
-  CloseWindow();        // Close window and OpenGL context
+  CloseWindow();
 
   return 0;
 }
