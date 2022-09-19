@@ -2,11 +2,8 @@
 // Created by Luis on 08/04/2021.
 //
 
-#include <stdlib.h>
 #include <math.h>
-
 #include "raylib.h"
-
 #include "ball.h"
 #include "../system/sounds.h"
 
@@ -15,12 +12,12 @@ static const int maxInitialArcAngleDeg = 45;
 
 static const double fixedBallSpeedFactor = 530.0;
 
-static double getAngleInRadians_(int angle){
+static double getAngleInRadians(int angle){
   double resultInRadians = (double)angle * PI / 180;
   return resultInRadians;
 }
 
-static double getBallInitialRandomAngle_(){
+static double getBallInitialRandomAngle(){
   int result;
   int selectRightOrLeft = GetRandomValue(0, 1);
 
@@ -30,33 +27,38 @@ static double getBallInitialRandomAngle_(){
     result = GetRandomValue(360 - maxInitialArcAngleDeg, 360 + maxInitialArcAngleDeg);
   }
 
-  return getAngleInRadians_(result);
+  return getAngleInRadians(result);
 }
 
-Ball* createBall(){
-  Ball *b = malloc(sizeof(Ball));
+Ball createBall(){
+  double initialAngle = getBallInitialRandomAngle();
+  Ball b = {
+      .radius = fixedBallRadius,
+      .velX = fixedBallSpeedFactor * cos(initialAngle),
+      .velY = fixedBallSpeedFactor * sin(initialAngle),
+      .color = YELLOW
+  };
+
+  resetBallState(&b);
+
+  return b;
+}
+
+void resetBallState(Ball *b){
   b->pos.x = (float)GetScreenWidth() / 2;
   b->pos.y = (float)GetScreenHeight() / 2;
-  b->radius = fixedBallRadius;
-
-  double initialAngle = getBallInitialRandomAngle_();
-  b->velX = fixedBallSpeedFactor * cos(initialAngle);
-  b->velY = fixedBallSpeedFactor * sin(initialAngle);
-
   b->frozen = true;
   b->screenEdgeCollision = false;
   b->paddleSideCollision = false;
   b->paddleTBCollision = false;
-  b->disablePaddleCollision = false;
-  b->color = YELLOW;
-  return b;
+  b->collideWithPaddleEnabled = false;
 }
 
-void drawBall(const Ball* b){
+void drawBall(const Ball * b){
   DrawCircleV(b->pos, b->radius, b->color);
 }
 
-void processBallMovement(Ball* b){
+void processBallMovement(Ball * b){
   if (IsKeyPressed(KEY_SPACE) && b->frozen){
     stopScoreSound();
     playWhistleSound();
@@ -82,7 +84,7 @@ void processBallMovement(Ball* b){
       playPaddleHitSound();
       b->velY *= -1.0f;
       b->paddleTBCollision = false;
-      b->disablePaddleCollision = true;
+      b->collideWithPaddleEnabled = true;
     }
 
     b->pos.x += (float)velocityX;
@@ -90,7 +92,7 @@ void processBallMovement(Ball* b){
   }
 }
 
-void checkBallBorderCollision(Ball* b){
+void checkBallBorderCollision(Ball * b){
   double velocityY = b->velY * GetFrameTime();
 
   // collide with bottom border
@@ -105,7 +107,7 @@ void checkBallBorderCollision(Ball* b){
 
 }
 
-void checkBallPaddleCollision(Ball* b, Paddle *p){
+void checkBallPaddleCollision(Ball * b, const Paddle *p){
   float velocityX = (float)b->velX * GetFrameTime();
   float velocityY = (float)b->velY * GetFrameTime();
 
@@ -114,7 +116,7 @@ void checkBallPaddleCollision(Ball* b, Paddle *p){
   float paddleLeftSide = p->pos.x;
   float paddleRightSide = p->pos.x +  p->size.x;
   float paddleTopSide = p->pos.y;
-  float paddleBottomSide = p->pos.y + p->size.y;
+  float paddleBottomSide = p->pos.y +  p->size.y;
 
   float testX = ballX;
   float testY = ballY;

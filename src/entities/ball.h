@@ -7,7 +7,7 @@
 
 #include "paddle.h"
 
-typedef struct {
+typedef struct{
   Vector2 pos;
   float radius;
   Color color;
@@ -18,17 +18,14 @@ typedef struct {
   bool screenEdgeCollision;
   bool paddleSideCollision;
   bool paddleTBCollision;
-  bool disablePaddleCollision;
+  bool collideWithPaddleEnabled;
 } Ball;
 
-Ball* createBall();
-
-void drawBall(const Ball* b);
-
-void checkBallBorderCollision(Ball* b);
-
-void checkBallPaddleCollision(Ball* b, Paddle *p);
-
-void processBallMovement(Ball* b);
+Ball createBall();
+void resetBallState(Ball *b);
+void drawBall(const Ball *b);
+void checkBallBorderCollision(Ball *b);
+void checkBallPaddleCollision(Ball *b, const Paddle *p);
+void processBallMovement(Ball *b);
 
 #endif //RAY_PONG_C_SRC_ENTITIES_BALL_H_

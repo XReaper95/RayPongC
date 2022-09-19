@@ -12,17 +12,6 @@ typedef struct {
   KeyboardKey DOWN_KEY;
 } ControlScheme;
 
-typedef struct {
-  const char *name;
-  Vector2 pos;
-  Vector2 size;
-  Color color;
-  int score;
-  const ControlScheme *controlScheme;
-  bool won;
-} Paddle;
-
-
 static const ControlScheme SCHEME1 = {
     .UP_KEY = KEY_W,
     .DOWN_KEY = KEY_S,
@@ -33,13 +22,20 @@ static const ControlScheme SCHEME2 = {
     .DOWN_KEY = KEY_DOWN,
 };
 
+typedef struct{
+  const char *name;
+  Vector2 pos;
+  Vector2 size;
+  Color color;
+  int score;
+  const ControlScheme *controlScheme;
+} Paddle;
 
-Paddle* createPaddle(const char *name, Color color, bool leftPaddle, const ControlScheme *scheme);
+Paddle createPaddle(const char *name, Color color, bool isLeftPaddle, const ControlScheme *scheme);
+void resetPaddleState(Paddle *p, bool isLeftPaddle);
+void UpdatePlayerScore(Paddle *p);
+void drawPaddle(const Paddle * p);
+void processInput(Paddle * p);
 
-void drawPaddle(const Paddle* p);
-
-void processInput(Paddle* p);
-
-bool checkWon(Paddle *p, int max_points);
 
 #endif //RAYLIB_C_SRC_PLAYER_H_

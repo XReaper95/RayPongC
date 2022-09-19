@@ -7,29 +7,18 @@
 
 #include "../entities/paddle.h"
 #include "../entities/ball.h"
-#include "sounds.h"
 
-typedef struct {
-  Paddle *leftPaddle;
-  Paddle *rightPaddle;
-  Ball *ball;
-  bool isWon;
+typedef struct{
+  Paddle leftPaddle;
+  Paddle rightPaddle;
+  Ball ball;
+  Paddle* winner;
 } Game;
 
-extern Game* game;
-
-void createGame();
-
-void processGameEvents();
-
-void processWonState();
-
-void updateScore();
-
-void drawGame();
-
-void cleanUpGame();
-
-void processGameReset();
+Game createGame();
+void processGameEvents(Game* game);
+void processWonState(Game* game);
+void drawGame(Game* game);
+void processGameReset(Game* game);
 
 #endif //RAY_PONG_C_SRC_SYSTEM_GAME_H_

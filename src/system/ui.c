@@ -6,7 +6,7 @@
 #include "ui.h"
 #include "game.h"
 
-void drawFieldLine_(int lineX, int lineY, int lineW, int lineH, Color color){
+static void DrawFieldLine(int lineX, int lineY, int lineW, int lineH, Color color){
   DrawRectangle(lineX, lineY, lineW, lineH, color);
 }
 
@@ -29,68 +29,43 @@ void drawGameField(){
   DrawCircle(GetScreenWidth()/2, GetScreenHeight()/2 , 10, fieldColor);
 
   // middle line
-  drawFieldLine_(
-      GetScreenWidth()/2 - linesThickness / 2,
-      0,
-      10,
-      GetScreenHeight(),
-      fieldColor
-      );
+  DrawFieldLine(GetScreenWidth() / 2 - linesThickness / 2, 0, 10,
+                GetScreenHeight(), fieldColor);
 
   // top line
-  drawFieldLine_(
-      0,
-      0 ,
-      GetScreenWidth(),
-      linesThickness,
-      fieldColor);
+  DrawFieldLine(0, 0, GetScreenWidth(), linesThickness, fieldColor);
 
   // bottom line
-  drawFieldLine_(
-      0,
-      GetScreenHeight() - linesThickness,
-      GetScreenWidth(),
-      linesThickness,
-      fieldColor);
+  DrawFieldLine(0, GetScreenHeight() - linesThickness, GetScreenWidth(),
+                linesThickness, fieldColor);
 
   // left line
-  drawFieldLine_(
-      0,
-      0,
-      linesThickness,
-      GetScreenHeight(),
-      Fade(BLUE, 0.4f)
-      );
+  DrawFieldLine(0, 0, linesThickness, GetScreenHeight(), Fade(BLUE, 0.4f));
 
   // right line
-  drawFieldLine_(
-      GetScreenWidth() - linesThickness,
-      0,
-      linesThickness,
-      GetScreenHeight(),
-      Fade(RED, 0.4f)
-  );
+  DrawFieldLine(GetScreenWidth() - linesThickness, 0, linesThickness,
+                GetScreenHeight(), Fade(RED, 0.4f));
 }
 
-void drawScoreBoard(){
+void drawScoreBoard(Game* game){
   char scoreAsText[2];
   const int playerNameFontSize = 29;
   const int scoreFontSize = 60;
 
   // right side
-  DrawText(game->leftPaddle->name, 75, 50 , playerNameFontSize, Fade(BLUE, 0.4f));
+  DrawText(game->leftPaddle.name, 75, 50 , playerNameFontSize, Fade(BLUE, 0.4f));
 
-  snprintf(scoreAsText, 2, "%d", game->leftPaddle->score);
+  snprintf(scoreAsText, 2, "%d", game->leftPaddle.score);
   DrawText(scoreAsText, 110, 80, scoreFontSize, Fade(BLUE, 0.4f));
 
   // left side
-  DrawText(game->rightPaddle->name,
-           GetScreenWidth() - MeasureText(game->rightPaddle->name, playerNameFontSize) - 75,
+  DrawText(game->rightPaddle.name,
+           GetScreenWidth() - MeasureText(game->rightPaddle.name, playerNameFontSize) - 75,
            50 ,
            playerNameFontSize,
            Fade(RED, 0.4f));
 
-  snprintf(scoreAsText, 2, "%d", game->rightPaddle->score);
+  snprintf(scoreAsText, 2, "%d", game->rightPaddle.score);
   DrawText(scoreAsText,
            GetScreenWidth() - MeasureText(scoreAsText, scoreFontSize) - 110,
            80,
@@ -98,13 +73,13 @@ void drawScoreBoard(){
            Fade(RED, 0.4f));
 }
 
-void drawWinMessage(Paddle p, Color msgColor) {
+void drawWinMessage(Paddle * p) {
   DrawText(
-      TextFormat("Player \"%s\" won!!!", p.name),
+      TextFormat("Player \"%s\" won!!!", p->name),
       110,
       GetScreenHeight() / 3,
       50,
-      Fade(msgColor, 0.55f)
+      Fade(p->color, 0.55f)
   );
 }
 

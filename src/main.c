@@ -1,6 +1,8 @@
+#include <stdlib.h>
 #include "raylib.h"
 #include "system/game.h"
 #include "system/ui.h"
+#include "system/sounds.h"
 
 int main(void)
 {
@@ -22,8 +24,8 @@ int main(void)
 
   loadSounds();
 
-  createGame();
-
+  // Entities
+  Game game = createGame();
   // SHADERS
   RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
   Shader shader = LoadShader(0, "../res/crt.fs");
@@ -37,10 +39,10 @@ int main(void)
     SetWindowTitle(TextFormat("%s FPS - %d", winTitle, GetFPS()));
 
     // EVENTS
-    if (!game->isWon) {
-      processGameEvents(game);
+    if (game.winner == NULL) {
+      processGameEvents(&game);
     } else {
-      processGameReset(game);
+      processGameReset(&game);
     }
 
     ClearBackground(backgroundColor);
@@ -49,7 +51,7 @@ int main(void)
     BeginDrawing();
       BeginTextureMode(target);
         ClearBackground(backgroundColor);
-        drawGame(game);
+        drawGame(&game);
       EndTextureMode();
 
 
@@ -60,17 +62,14 @@ int main(void)
                        WHITE);
       EndShaderMode();
 
-      drawScoreBoard(game);
+      drawScoreBoard(&game);
 
-    if (game->isWon){
-      processWonState(game);
+    if (game.winner != NULL){
+      processWonState(&game);
     }
 
     EndDrawing();
   }
-
-  // DE-INITIALIZE
-  cleanUpGame(game);
 
   unloadSounds();
   CloseAudioDevice();
