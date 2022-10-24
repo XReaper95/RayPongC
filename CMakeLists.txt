@@ -19,19 +19,26 @@ if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL Release)
 endif()
 
 # RAYLIB ---------------
+# Set this to the exact desired version, leave empty to use latest
+set(RAYLIB_VERSION)
 
-# Set this to the minimal version you want to support
-find_package(raylib 3.5 QUIET) # Let CMake search for a raylib-config.cmake
+find_package(raylib ${RAYLIB_VERSION} QUIET) # Let CMake search for a raylib-config.cmake
 
 # You could change the QUIET above to REQUIRED and remove this if() clause
 # This part downloads raylib and builds it if it's not installed on your system
 if (NOT raylib_FOUND) # If there's none, fetch and build raylib
     include(FetchContent)
 
+    if(NOT RAYLIB_VERSION)
+        set(RAYLIB_VERSION master)
+    endif()
+
     FetchContent_Declare(
             raylib
-            URL https://github.com/raysan5/raylib/archive/master.tar.gz
+            URL https://github.com/raysan5/raylib/archive/${RAYLIB_VERSION}.tar.gz
     )
+
+    unset(RAYLIB_VERSION)
 
     FetchContent_GetProperties(raylib)
     if (NOT raylib_POPULATED) # Have we downloaded raylib yet?
