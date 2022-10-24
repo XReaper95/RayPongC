@@ -5,63 +5,63 @@
 #include "sounds.h"
 
 typedef struct {
-  Sound startWhistle;
-  Sound paddleHit;
-  Sound borderHit;
-  Sound score;
-  Sound gameWon;
+    Sound startWhistle;
+    Sound paddleHit;
+    Sound borderHit;
+    Sound score;
+    Sound gameWon;
 
-  bool initialized;
+    bool initialized;
 } SoundsSingleton;
 
 static SoundsSingleton soundsManager;
 
-static Sound LoadSoundResource(const char * path) {
-  Sound snd = LoadSound(TextFormat("../res/%s", path));
+static Sound LoadSoundResource(const char *path) {
+    Sound snd = LoadSound(TextFormat("../res/%s", path));
 
-  if (snd.frameCount == 0) {
-    TraceLog(LOG_ERROR, "Error loading sound from: ../res/%s", path);
-  }
+    if (snd.frameCount == 0) {
+        TraceLog(LOG_ERROR, "Error loading sound from: ../res/%s", path);
+    }
 
-  return snd;
+    return snd;
 }
 
 void SoundsLoadAll() {
-  if (!soundsManager.initialized){
-    soundsManager.startWhistle = LoadSoundResource("referee_whistle.wav");
-    soundsManager.paddleHit = LoadSoundResource("wood_hit.wav");
-    soundsManager.borderHit = LoadSoundResource("border_hit.wav");
-    soundsManager.score = LoadSoundResource("score.wav");
-    soundsManager.gameWon = LoadSoundResource("game_won_clapping.wav");
+    if (!soundsManager.initialized) {
+        soundsManager.startWhistle = LoadSoundResource("referee_whistle.wav");
+        soundsManager.paddleHit = LoadSoundResource("wood_hit.wav");
+        soundsManager.borderHit = LoadSoundResource("border_hit.wav");
+        soundsManager.score = LoadSoundResource("score.wav");
+        soundsManager.gameWon = LoadSoundResource("game_won_clapping.wav");
 
-    soundsManager.initialized = true;
-  }
+        soundsManager.initialized = true;
+    }
 }
 
 void SoundsPlayWhistle() {
-  PlaySound(soundsManager.startWhistle);
+    PlaySound(soundsManager.startWhistle);
 }
 
 void SoundsPlayPaddleHit() {
-  PlaySound(soundsManager.paddleHit);
+    PlaySound(soundsManager.paddleHit);
 }
 
 void SoundsPlayBorderHit() {
-  PlaySound(soundsManager.borderHit);
+    PlaySound(soundsManager.borderHit);
 }
 
 void SoundsPlayScore() {
-  PlaySound(soundsManager.score);
+    PlaySound(soundsManager.score);
 }
 
 void SoundsPlayGameWon() {
-  PlaySound(soundsManager.gameWon);
+    PlaySound(soundsManager.gameWon);
 }
 
 void SoundsStopScore() {
-  StopSound(soundsManager.score);
+    StopSound(soundsManager.score);
 }
 
 void SoundsStopGameWon() {
-  StopSound(soundsManager.gameWon);
+    StopSound(soundsManager.gameWon);
 }

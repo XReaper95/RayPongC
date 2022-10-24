@@ -10,8 +10,11 @@
 #include "paddle.h"
 
 void UIDrawGameField();
-void UIDrawScoreBoard(Paddle* leftPaddle, Paddle* rightPaddle);
-void UIDrawWinMessage(Paddle * p);
+
+void UIDrawScoreBoard(Paddle *leftPaddle, Paddle *rightPaddle);
+
+void UIDrawWinMessage(Paddle *p);
+
 void UIDrawResetMessage();
 
 #endif //RAY_PONG_C_SRC_SYSTEM_UI_H_

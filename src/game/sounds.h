@@ -8,12 +8,19 @@
 #include <raylib.h>
 
 void SoundsLoadAll();
+
 void SoundsPlayWhistle();
+
 void SoundsPlayPaddleHit();
+
 void SoundsPlayBorderHit();
+
 void SoundsPlayScore();
+
 void SoundsPlayGameWon();
+
 void SoundsStopScore();
+
 void SoundsStopGameWon();
 
 #endif //RAY_PONG_C_SRC_SYSTEM_SOUNDS_H_
