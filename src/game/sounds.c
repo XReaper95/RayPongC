@@ -4,6 +4,8 @@
 
 #include "sounds.h"
 
+#include "raylib.h"
+
 typedef struct {
     Sound startWhistle;
     Sound paddleHit;
@@ -17,7 +19,7 @@ typedef struct {
 static SoundsSingleton soundsManager;
 
 static Sound LoadSoundResource(const char *path) {
-    Sound snd = LoadSound(TextFormat("../res/%s", path));
+    const Sound snd = LoadSound(TextFormat("../res/%s", path));
 
     if (snd.frameCount == 0) {
         TraceLog(LOG_ERROR, "Error loading sound from: ../res/%s", path);

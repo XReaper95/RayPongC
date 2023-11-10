@@ -2,17 +2,21 @@
 // Created by Luis on 13/04/2021.
 //
 
+#include <stddef.h>
+
 #include "game.h"
+#include "sounds.h"
+#include "ui.h"
 
 #define GAME_MAX_POINTS 5
 
-static bool CheckWinner(Paddle *p) {
+static bool CheckWinner(const Paddle *p) {
     if (p->score >= GAME_MAX_POINTS) {
         SoundsPlayGameWon();
         return true;
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 static void ResetGame(Game *game) {
@@ -25,9 +29,9 @@ static void ResetGame(Game *game) {
 }
 
 static void UpdateScore(Game *game) {
-    float ballX = game->ball.pos.x;
-    float ballRadius = game->ball.radius;
-    float screenW = (float) GetScreenWidth();
+    const float ballX = game->ball.pos.x;
+    const float ballRadius = game->ball.radius;
+    const float screenW = (float) GetScreenWidth();
     bool scored = false;
 
     // right score
@@ -78,7 +82,7 @@ void GameProcessEvents(Game *game) {
     UpdateScore(game);
 }
 
-void GameDraw(Game *game) {
+void GameDraw(const Game *game) {
     UIDrawGameField();
 
     PaddleDraw(&game->leftPaddle);
@@ -105,4 +109,4 @@ void GameProcessWonState(Game *game) {
     UIDrawResetMessage();
 }
 
-bool GameHasWinner(Game *game) { return game->winner != NULL; }
+bool GameHasWinner(const Game *game) { return game->winner != NULL; }

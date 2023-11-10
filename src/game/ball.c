@@ -3,19 +3,23 @@
 //
 
 #include "ball.h"
+#include "sounds.h"
+
+#include <math.h>
+
 
 static const float fixedBallRadius = 15.0f;
 static const int maxInitialArcAngleDeg = 45;
 static const double fixedBallSpeedFactor = 530.0;
 
-static double AngleToRadians(int angle) {
-    double resultInRadians = (double) angle * PI / 180;
+static double AngleToRadians(const int angle) {
+    const double resultInRadians = (double) angle * PI / 180;
     return resultInRadians;
 }
 
 static double GetInitialRandomAngle() {
     int result;
-    int selectRightOrLeft = GetRandomValue(0, 1);
+    const int selectRightOrLeft = GetRandomValue(0, 1);
 
     if (selectRightOrLeft == 0) {
         result = GetRandomValue(180 - maxInitialArcAngleDeg, 180 + maxInitialArcAngleDeg);
@@ -27,7 +31,7 @@ static double GetInitialRandomAngle() {
 }
 
 Ball BallCreate() {
-    double initialAngle = GetInitialRandomAngle();
+    const double initialAngle = GetInitialRandomAngle();
     Ball b = {
             .radius = fixedBallRadius,
             .velX = fixedBallSpeedFactor * cos(initialAngle),
@@ -62,8 +66,8 @@ void BallProcessMovement(Ball *b) {
     }
 
     if (!b->frozen) {
-        double velocityX = b->velX * GetFrameTime();
-        double velocityY = b->velY * GetFrameTime();
+        const double velocityX = b->velX * GetFrameTime();
+        const double velocityY = b->velY * GetFrameTime();
 
         if (b->screenEdgeCollision) {
             SoundsPlayBorderHit();
@@ -89,7 +93,7 @@ void BallProcessMovement(Ball *b) {
 }
 
 void BallCheckBorderCollision(Ball *b) {
-    double velocityY = b->velY * GetFrameTime();
+    const double velocityY = b->velY * GetFrameTime();
 
     // collide with bottom border
     if (b->pos.y + b->radius + velocityY >= (float) GetScreenHeight()) {
@@ -104,15 +108,15 @@ void BallCheckBorderCollision(Ball *b) {
 }
 
 void BallCheckPaddleCollision(Ball *b, const Paddle *p) {
-    float velocityX = (float) b->velX * GetFrameTime();
-    float velocityY = (float) b->velY * GetFrameTime();
+    const float velocityX = (float) b->velX * GetFrameTime();
+    const float velocityY = (float) b->velY * GetFrameTime();
 
-    float ballX = b->pos.x + velocityX;
-    float ballY = b->pos.y + velocityY;
-    float paddleLeftSide = p->pos.x;
-    float paddleRightSide = p->pos.x + p->size.x;
-    float paddleTopSide = p->pos.y;
-    float paddleBottomSide = p->pos.y + p->size.y;
+    const float ballX = b->pos.x + velocityX;
+    const float ballY = b->pos.y + velocityY;
+    const float paddleLeftSide = p->pos.x;
+    const float paddleRightSide = p->pos.x + p->size.x;
+    const float paddleTopSide = p->pos.y;
+    const float paddleBottomSide = p->pos.y + p->size.y;
 
     float testX = ballX;
     float testY = ballY;
@@ -122,9 +126,9 @@ void BallCheckPaddleCollision(Ball *b, const Paddle *p) {
     if (ballY < paddleTopSide) testY = paddleTopSide;
     else if (ballY > paddleBottomSide) testY = paddleBottomSide;
 
-    float distX = ballX - testX;
-    float distY = ballY - testY;
-    float distance = sqrtf((distX * distX) + (distY * distY));
+    const float distX = ballX - testX;
+    const float distY = ballY - testY;
+    const float distance = sqrtf(distX * distX + distY * distY);
 
     if (distance <= b->radius) {
         if (distY == 0.0f) {

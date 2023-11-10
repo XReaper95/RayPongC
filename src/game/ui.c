@@ -4,20 +4,22 @@
 
 #include "ui.h"
 
+#include <stdio.h>
+
 void UIDrawGameField() {
-    Color fieldColor = LIGHTGRAY;
+    const Color fieldColor = LIGHTGRAY;
 
     // middle ring
-    Vector2 center = {(float) GetScreenWidth() / 2, (float) GetScreenHeight() / 2};
-    float innerRadius = 165.0f;
-    float outerRadius = 175.0f;
+    const Vector2 center = {(float) GetScreenWidth() / 2, (float) GetScreenHeight() / 2};
+    const float innerRadius = 165.0f;
+    const float outerRadius = 175.0f;
 
-    float startAngle = 0.0f;
-    float endAngle = 360.0f;
-    int segments = 0;
+    const float startAngle = 0.0f;
+    const float endAngle = 360.0f;
+    const int segments = 0;
     DrawRing(center, innerRadius, outerRadius, startAngle, endAngle, segments, fieldColor);
 
-    int linesThickness = 10;
+    const int linesThickness = 10;
 
     // middle circle
     DrawCircle(GetScreenWidth() / 2, GetScreenHeight() / 2, 10, fieldColor);
@@ -41,7 +43,7 @@ void UIDrawGameField() {
                   GetScreenHeight(), Fade(RED, 0.4f));
 }
 
-void UIDrawScoreBoard(Paddle *leftPaddle, Paddle *rightPaddle) {
+void UIDrawScoreBoard(const Paddle *leftPaddle, const Paddle *rightPaddle) {
     char scoreAsText[2];
     const int playerNameFontSize = 29;
     const int scoreFontSize = 60;
@@ -67,7 +69,7 @@ void UIDrawScoreBoard(Paddle *leftPaddle, Paddle *rightPaddle) {
              Fade(RED, 0.4f));
 }
 
-void UIDrawWinMessage(Paddle *p) {
+void UIDrawWinMessage(const Paddle *p) {
     DrawText(
             TextFormat("Player \"%s\" won!!!", p->name),
             110,

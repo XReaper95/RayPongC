@@ -8,7 +8,7 @@ static const float paddleFixedWidth = 30.0f;
 static const float paddleWidthMargin = 15.0f;
 static const float paddleMovementFactor = 300.0f;
 
-Paddle PaddleCreate(const char *name, Color color, bool isLeftPaddle, const ControlScheme *scheme) {
+Paddle PaddleCreate(const char *name, const Color color, const bool isLeftPaddle, const ControlScheme *scheme) {
     Paddle p = {
             .name = name,
             .color = color,
@@ -24,13 +24,13 @@ Paddle PaddleCreate(const char *name, Color color, bool isLeftPaddle, const Cont
     return p;
 }
 
-void PaddleResetState(Paddle *p, bool isLeftPaddle) {
+void PaddleResetState(Paddle *p, const bool isLeftPaddle) {
     if (isLeftPaddle) {
         p->pos.x = paddleWidthMargin;
     } else {
         p->pos.x = (float) GetScreenWidth() - paddleWidthMargin - paddleFixedWidth;
     }
-    p->pos.y = ((float) GetScreenHeight() / 2) - (paddleFixedHeight / 2);
+    p->pos.y = (float) GetScreenHeight() / 2 - paddleFixedHeight / 2;
 
     p->score = 0;
 }
@@ -41,10 +41,10 @@ void PaddleDraw(const Paddle *p) {
 
 void PaddleProcessInput(Paddle *p) {
     if (IsKeyDown(p->controlScheme->UP_KEY) && p->pos.y > 0.0f) { // UP
-        p->pos.y -= paddleMovementFactor * (float) GetFrameTime();
+        p->pos.y -= paddleMovementFactor * GetFrameTime();
     }
     if (IsKeyDown(p->controlScheme->DOWN_KEY) && p->pos.y + p->size.y < (float) GetScreenHeight()) { // Down
-        p->pos.y += paddleMovementFactor * (float) GetFrameTime();
+        p->pos.y += paddleMovementFactor * GetFrameTime();
     }
 }
 

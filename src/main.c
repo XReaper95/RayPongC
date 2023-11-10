@@ -19,9 +19,9 @@ int main() {
     SoundsLoadAll();
 
     // SHADERS
-    RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
-    Shader shader = LoadShader(0, "../res/crt.fs");
-    Color backgroundColor = ColorFromHSV(207, 0.47f, 0.15f);
+    const RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
+    const Shader shader = LoadShader(0, "../res/crt.fs");
+    const Color backgroundColor = ColorFromHSV(207, 0.47f, 0.15f);
 
     Game game = GameCreate();
 

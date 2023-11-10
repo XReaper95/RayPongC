@@ -5,9 +5,7 @@
 #ifndef RAY_PONG_C_SRC_ENTITIES_BALL_H_
 #define RAY_PONG_C_SRC_ENTITIES_BALL_H_
 
-#include <math.h>
 #include "paddle.h"
-#include "sounds.h"
 
 typedef struct {
     Vector2 pos;

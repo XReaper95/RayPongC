@@ -5,8 +5,6 @@
 #ifndef RAY_PONG_C_SRC_SYSTEM_SOUNDS_H_
 #define RAY_PONG_C_SRC_SYSTEM_SOUNDS_H_
 
-#include <raylib.h>
-
 void SoundsLoadAll();
 
 void SoundsPlayWhistle();
